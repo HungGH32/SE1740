@@ -13,13 +13,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Brand;
+import model.Category;
 import model.Product;
 
 /**
  *
  * @author Dell
  */
-public class HomeServlet extends HttpServlet {
+public class StoreServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,11 +35,17 @@ public class HomeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         // get data from dao 
         DAO dao = new DAO();
-        List<Product> list = dao.getAllProduct();
+        List<Product> listProduct = dao.getAllProduct();
+        List<Category> listCategory = dao.getAllCategory();
+        List<Brand> listBrand = dao.getAllBrand();
+        List<Product> top3_new = dao.getTop3NewArrival();
         
         // set data to jsp
-        request.setAttribute("listProduct", list);
-        request.getRequestDispatcher("Home.jsp").forward(request, response);
+        request.setAttribute("listProduct", listProduct);
+        request.setAttribute("listCategory", listCategory);
+        request.setAttribute("listBrand", listBrand);
+        request.setAttribute("top3_new", top3_new);
+        request.getRequestDispatcher("Store.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
