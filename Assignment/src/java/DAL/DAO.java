@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import model.Account;
 import model.Brand;
 import model.Category;
 import model.Product;
@@ -131,6 +132,32 @@ public class DAO {
         return null;
     }
     
+    //Search product by name
+     public List<Product> getProductByName(String txtSearch){
+        List<Product> list = new ArrayList<>();
+        String query = "select * from Product\n" +
+                        "where [name] like ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            //replace ? by category_id
+            ps.setString(1,"%" + txtSearch + "%");
+            rs = ps.executeQuery();
+            while(rs.next()){
+                list.add(new Product(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(5),
+                        rs.getString(7),
+                        rs.getFloat(6),
+                        rs.getDate(8)));
+            }
+        } catch (Exception e) {
+            
+        }
+        return list;
+    }
+    
     // Get three New arrival from DB
     public List<Product> getTop3NewArrival(){
         List<Product> list = new ArrayList<>();
@@ -153,18 +180,79 @@ public class DAO {
         return list;
     }
     
+    // check account to login
+    public Account login(String user, String pass){
+        String query ="select * from Account\n" +
+                        "where [username] = ?\n" +
+                        "and [password] = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1,user);
+            ps.setString(2,pass);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                return new Account(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5));
+            }
+        } catch (Exception e) {
+        }
+        return null; 
+    }
+    
+    // check exist account
+    public Account checkExistAccount(String user){
+        String query ="select * from Account\n" +
+                        "where [username] = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1,user);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                return new Account(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    //Create a new account
+    public void createAccount(String user, String pass, String email){
+        String query ="INSERT INTO [Account] ([username], [password], [email], [role])\n" +
+                      "VALUES (?, ?, ?, 0);";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1,user);
+            ps.setString(2,pass);
+            ps.setString(3,email);
+            ps.executeQuery(); // no result ==> no nead result set
+        } catch (Exception e) {
+        }
+        
+    }
     // TEST 
     public static void main(String[] args) {
         try {
             DAO dao = new DAO();
-            List<Product> list = dao.getAllProduct();
+            List<Product> list = dao.getProductByName("Lo");
             List<Category> listC = dao.getAllCategory();
             List<Brand> listB = dao.getAllBrand();
             List<Product> listNew = dao.getTop3NewArrival();
 //            System.out.println(dao.getProductByID("15"));
-//            for (Product o : list ){
-//                System.out.println(o);
-//            }
+//System.out.println(dao.login("adminHung", "adminHung"));
+            for (Product o : list ){
+                System.out.println(o);
+            }
         } catch (Exception e) {
         }
     }
