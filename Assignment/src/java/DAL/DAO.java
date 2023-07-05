@@ -82,6 +82,55 @@ public class DAO {
         return list;
     }
     
+    // Get product by category ID
+    public List<Product> getProductByCategory(String category_id){
+        List<Product> list = new ArrayList<>();
+        String query = "select * from Product where category_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            //replace ? by category_id
+            ps.setString(1, category_id);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                list.add(new Product(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(5),
+                        rs.getString(7),
+                        rs.getFloat(6),
+                        rs.getDate(8)));
+            }
+        } catch (Exception e) {
+            
+        }
+        return list;
+    }
+    
+    //Get product by ID
+    public Product getProductByID(String product_id){
+        String query = "select * from Product where product_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            //replace ? by 
+            ps.setString(1, product_id);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                return new Product(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(5),
+                        rs.getString(7),
+                        rs.getFloat(6),
+                        rs.getDate(8));
+            }
+        } catch (Exception e) {
+            
+        }
+        return null;
+    }
+    
     // Get three New arrival from DB
     public List<Product> getTop3NewArrival(){
         List<Product> list = new ArrayList<>();
@@ -112,9 +161,10 @@ public class DAO {
             List<Category> listC = dao.getAllCategory();
             List<Brand> listB = dao.getAllBrand();
             List<Product> listNew = dao.getTop3NewArrival();
-            for (Product o : listNew) {
-                System.out.println(o);
-            }
+//            System.out.println(dao.getProductByID("15"));
+//            for (Product o : list ){
+//                System.out.println(o);
+//            }
         } catch (Exception e) {
         }
     }

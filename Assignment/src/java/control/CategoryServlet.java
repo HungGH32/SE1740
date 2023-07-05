@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
+package control;
 
+import DAL.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,13 +13,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.Brand;
+import model.Category;
+import model.Product;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(urlPatterns={"/role"})
-public class role extends HttpServlet {
+@WebServlet(name="CategoryServlet", urlPatterns={"/category"})
+public class CategoryServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -29,18 +35,22 @@ public class role extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet role</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet role at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        String category_id = request.getParameter("cid");
+        // get category id
+        DAO dao =new DAO();
+        List<Product> list = dao.getProductByCategory(category_id);
+        List<Category> listCategory = dao.getAllCategory();
+        List<Brand> listBrand = dao.getAllBrand();
+        List<Product> top3_new = dao.getTop3NewArrival();
+        
+        // set data to jsp
+        request.setAttribute("listCategory", listCategory);
+        request.setAttribute("listBrand", listBrand);
+        request.setAttribute("top3_new", top3_new);
+        request.setAttribute("listProduct", list);
+        request.setAttribute("category_clicked", category_id);
+        request.getRequestDispatcher("Store.jsp").forward(request, response);
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
