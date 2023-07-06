@@ -14,14 +14,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import model.Account;
+import model.Brand;
+import model.Category;
+import model.Product;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="LoginServlet", urlPatterns={"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name="ManageProductServlet", urlPatterns={"/manageproduct"})
+public class ManageProductServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -32,20 +36,34 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Account a = (Account) session.getAttribute("acc");
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("user");
-        String password = request.getParameter("pass");
+        // get data from dao 
         DAO dao = new DAO();
-        Account acc = dao.login(username, password);
-        if(acc == null){
-            request.setAttribute("mess", "Wrong username or password!");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
-        }else{
-            HttpSession session = request.getSession();
-            session.setAttribute("acc", acc);
-            session.setMaxInactiveInterval(600);
-            response.sendRedirect("store");
+        int numOfProduct = dao.getNumOfProduct();
+        int lastPage = numOfProduct/15;
+        if(numOfProduct %15 != 0){
+            lastPage ++;
         }
+        String index = request.getParameter("page");
+        if(index == null){
+            index = "1";
+        }
+        int page = Integer.parseInt(index);
+        
+        
+        List<Product> listProduct = dao.getAllProduct(page);
+        List<Category> listCategory = dao.getAllCategory();
+        List<Brand> listBrand = dao.getAllBrand();
+        
+        // set data to jsp
+        request.setAttribute("currentPage", page);
+        request.setAttribute("lastPage", lastPage); 
+        request.setAttribute("listProduct", listProduct);
+        request.setAttribute("listCategory", listCategory);
+        request.setAttribute("listBrand", listBrand);
+        request.getRequestDispatcher("ProductManager.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

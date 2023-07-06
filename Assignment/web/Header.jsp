@@ -57,7 +57,20 @@
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-						<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+                                                <c:if test="${sessionScope.acc.role == 1}">
+                                                    <li><a href="manageproduct"><i class="fa fa-gear"></i> Manage Product</a></li>
+                                                </c:if>
+                                                <c:if test="${sessionScope.acc.role == 0}">
+                                                    <li><a href="#"><i class="fa fa-gear"></i> Manage Account</a></li>
+                                                </c:if>
+                                                <c:choose>
+                                                    <c:when test="${sessionScope.acc != null}">
+                                                        <li><a href="logout"><i class="fa fa-user-o"></i> Sign out</a></li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <li><a href="Login.jsp"><i class="fa fa-user-o"></i> Sign in / Sign up</a></li>
+                                                    </c:otherwise>
+                                                </c:choose>
 					</ul>
 				</div>
 			</div>
@@ -72,8 +85,8 @@
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
-								<a href="#" class="logo">
-									<img src="./img/logo.png" alt="">
+								<a href="store" class="logo">
+                                                                    <img src="https://th.bing.com/th/id/OIP.S7VgzvIFUvh6IK2QkyWYXgHaHa?w=194&h=194&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="" class="img-fluid" style="max-width: 70px; max-height: 70px;">
 								</a>
 							</div>
 						</div>
@@ -190,25 +203,6 @@
 		</nav>
 		<!-- /NAVIGATION -->
 
-		<!-- BREADCRUMB -->
-		<div id="breadcrumb" class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-12">
-						<h3 class="breadcrumb-header">Regular Page</h3>
-						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
-							<li class="active">Blank</li>
-						</ul>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /BREADCRUMB -->
 		<!-- jQuery Plugins -->
 		<script src="front-end/js/jquery.min.js"></script>
 		<script src="front-end/js/bootstrap.min.js"></script>

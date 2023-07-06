@@ -5,6 +5,7 @@
 package DAL;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -238,7 +239,7 @@ public class DAO {
             ps.setString(1,user);
             ps.setString(2,pass);
             ps.setString(3,email);
-            ps.executeQuery(); // no result ==> no nead result set
+            ps.executeUpdate(); // no result ==> no nead result set
         } catch (Exception e) {
         }
         
@@ -258,6 +259,39 @@ public class DAO {
         }
         return 0;
     }
+    
+    // Add product
+    public void addProduct(String name, int category_id, int brand_id, double price, float discount, String imageUrl){
+        String query ="INSERT INTO [Product] ([name], [category_id], [brand_id], [price], [discount], [imageUrl], [createtime]) \n" +
+                        "VALUES (?, ?, ?, ?, ?, ?, '2023-07-07');";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1,name);
+            ps.setInt(2,category_id);
+            ps.setInt(3,brand_id);
+            ps.setDouble(4,price);
+            ps.setFloat(5,discount);
+            ps.setString(6,imageUrl);
+            ps.executeUpdate(); // no result ==> no nead result set
+        } catch (Exception e) {
+        }
+    }
+    // Delete product
+    public void deleteProduct(String pid){
+        String query ="delete from Product \n" +
+                        "where product_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1,pid);
+            ps.executeUpdate(); 
+        } catch (Exception e) {
+        }
+        
+    }
+    
+    // Update product
     
     // TEST 
     public static void main(String[] args) {
