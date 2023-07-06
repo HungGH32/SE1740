@@ -24,12 +24,15 @@ public class DAO {
     ResultSet rs = null;
     
     // Get Product from DB
-    public List<Product> getAllProduct(){
+    public List<Product> getAllProduct(int page){
         List<Product> list = new ArrayList<>();
-        String query = "select * from Product";
+        String query = "select * from Product\n" +
+                        "ORDER BY product_id\n" +
+                        "OFFSET ? ROWS FETCH NEXT 15 ROWS ONLY";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
+            ps.setInt(1, (page - 1) * 15); //page 1 start 0
             rs = ps.executeQuery();
             while(rs.next()){
                 list.add(new Product(
@@ -240,6 +243,22 @@ public class DAO {
         }
         
     }
+    
+    // Get number of Product
+    public int getNumOfProduct(){
+        String query ="select COUNT(*) from Product";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+    
     // TEST 
     public static void main(String[] args) {
         try {
@@ -248,6 +267,7 @@ public class DAO {
             List<Category> listC = dao.getAllCategory();
             List<Brand> listB = dao.getAllBrand();
             List<Product> listNew = dao.getTop3NewArrival();
+            System.out.println(dao.getNumOfProduct());
 //            System.out.println(dao.getProductByID("15"));
 //System.out.println(dao.login("adminHung", "adminHung"));
             for (Product o : list ){

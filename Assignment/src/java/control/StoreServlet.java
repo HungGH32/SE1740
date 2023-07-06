@@ -35,12 +35,26 @@ public class StoreServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         // get data from dao 
         DAO dao = new DAO();
-        List<Product> listProduct = dao.getAllProduct();
+        int numOfProduct = dao.getNumOfProduct();
+        int lastPage = numOfProduct/15;
+        if(numOfProduct %15 != 0){
+            lastPage ++;
+        }
+        String index = request.getParameter("page");
+        if(index == null){
+            index = "1";
+        }
+        int page = Integer.parseInt(index);
+        
+        
+        List<Product> listProduct = dao.getAllProduct(page);
         List<Category> listCategory = dao.getAllCategory();
         List<Brand> listBrand = dao.getAllBrand();
         List<Product> top3_new = dao.getTop3NewArrival();
         
         // set data to jsp
+        request.setAttribute("currentPage", page);
+        request.setAttribute("lastPage", lastPage); 
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("listCategory", listCategory);
         request.setAttribute("listBrand", listBrand);

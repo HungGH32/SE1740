@@ -222,12 +222,10 @@
                                                 
 						<!-- store bottom filter -->
 						<div class="store-filter clearfix">
-							<ul class="store-pagination">
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+							<ul class="store-pagination">	
+                                                            <c:forEach begin="1" end="${lastPage}" var="i">
+                                                                <li <c:if test="${i == currentPage}">class="active"</c:if>><a href="store?page=${i}">${i}</a></li>
+                                                            </c:forEach>
 							</ul>
 						</div>
 						<!-- /store bottom filter -->
