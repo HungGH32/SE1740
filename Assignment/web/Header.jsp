@@ -61,7 +61,7 @@
                                                     <li><a href="manageproduct"><i class="fa fa-gear"></i> Manage Product</a></li>
                                                 </c:if>
                                                 <c:if test="${sessionScope.acc.role == 0}">
-                                                    <li><a href="#"><i class="fa fa-gear"></i> Manage Account</a></li>
+                                                    <li><a href="AccountManage.jsp"><i class="fa fa-gear"></i> Manage Account</a></li>
                                                 </c:if>
                                                 <c:choose>
                                                     <c:when test="${sessionScope.acc != null}">

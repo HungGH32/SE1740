@@ -9,12 +9,15 @@ import DAL.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Brand;
+import model.Cart;
 import model.Category;
+import model.Item;
 import model.Product;
 
 /**
@@ -46,12 +49,41 @@ public class StoreServlet extends HttpServlet {
         }
         int page = Integer.parseInt(index);
         
-        
         List<Product> listProduct = dao.getAllProduct(page);
         List<Category> listCategory = dao.getAllCategory();
         List<Brand> listBrand = dao.getAllBrand();
         List<Product> top3_new = dao.getTop3NewArrival();
+// Cart (on going )     
+    // Set up cookie
+        // get cookie from pc
+        Cookie[] array = request.getCookies();
+        // cookie(txt)
+        // seperate by " ," each item |id: quantity|,|id: quantity|, ...
+        String text = "";
+        if (array != null){
+            for(Cookie cookie: array){
+                
+                if(cookie.getName().equals("cart")){
+                    text += cookie.getValue();
+                }
+            }
+        }
+        Cart cart = new Cart(text, listProduct);
+        List<Item> listItem = cart.getItems();
         
+        int listItemSize;
+        if(listItem != null){
+            listItemSize = listItem.size();
+        }else{
+            listItemSize = 0;
+        }
+        
+        
+     // Set up cookie
+     
+     // attribute
+        request.setAttribute("listItemSize", listItemSize);
+// Cart (on going ) 
         // set data to jsp
         request.setAttribute("currentPage", page);
         request.setAttribute("lastPage", lastPage); 
