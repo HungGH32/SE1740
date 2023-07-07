@@ -255,7 +255,7 @@ body {
         </div>
         <div class="col-sm-6">
           <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
-          <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>
+          <a href="store" class="btn btn-danger" ><i class="material-icons">&#xE15C;</i> <span>Back to Home</span></a>
         </div>
       </div>
     </div>
@@ -298,7 +298,7 @@ body {
                   <td>${o.createTime}</td>
                   <!--DATA-->
                   <td>
-                    <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                    <a href="loadeditproduct?pid=${o.product_id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                     <a href="delete?pid=${o.product_id}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                   </td>
             </tr>

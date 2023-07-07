@@ -4,6 +4,7 @@
     Author     : Dell
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -29,65 +30,71 @@
           <div class="card">
             <div class="card-header">
               <div class="d-flex">
-                <div class="align-self-center flex-grow-1">Edit product | #1 Lenovo IdeaPad i300</div>
-
-                <div class="align-self-center text-right">
-                  <a href="" class="btn btn-danger">Cancel</a>
-                  <a href="" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
-                </div>
+                <div class="align-self-center flex-grow-1">Edit product | #${detail.product_id} ${detail.name}</div>
+                <a href="manageproduct" class="btn btn-danger">Back to Manage</a>
               </div>
             </div>
 
             <div class="card-body">
-              <form method="POST">
+                <form action="edit" method="POST">
                 <!-- main product data -->
                 <div class="row">
                   <div class="col-md-4">
-                    <img src="https://via.placeholder.com/250" class="img-thumbnail img-fluid">
+                    <img src="${detail.imageURL}" class="img-thumbnail img-fluid">
                   </div>
                   <div class="col-md-8">
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">ID</label>
                       <div class="col-sm-5">
-                        <input type="text" readonly class="form-control-plaintext" value="1">
+                          <input name="id" type="text" readonly class="form-control-plaintext" value="${detail.product_id}">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="name" class="col-sm-3 col-form-label">Name</label>
                       <div class="col-sm-7">
-                        <input type="text" class="form-control" id="name" value="Lenovo IdeaPad i300">
+                        <input type="text" class="form-control" name="name" value="${detail.name}">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="category" class="col-sm-3 col-form-label">Category</label>
                       <div class="col-sm-5">
-                        <select class="form-control" id="category">
-                          <option>Ноутбуки</option>
-                          <option>Планшеты</option>
-                          <option>Компьютеры</option>
+                        <select class="form-control" name="category">
+                            <c:forEach items="${listCategory}" var="o">
+                                <option value="${o.category_id}">
+                                    ${o.category_name}
+                                </option>
+                            </c:forEach>
                         </select>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="brand" class="col-sm-3 col-form-label">Brand</label>
                       <div class="col-sm-5">
-                        <select class="form-control" id="brand">
-                          <option>Asus</option>
-                          <option>HP</option>
-                          <option>Lenovo</option>
+                        <select class="form-control" name="brand">
+                            <c:forEach items="${listBrand}" var="o">
+                                <option value="${o.brand_id}">
+                                    ${o.brand_name}
+                                </option>
+                            </c:forEach>
                         </select>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="manufacturer_id" class="col-sm-3 col-form-label">Manufacturer ID</label>
+                      <label for="manufacturer_id" class="col-sm-3 col-form-label">Price</label>
                       <div class="col-sm-5">
-                        <input type="text" class="form-control" id="manufacturer_id">
+                          <input type="text" class="form-control" name="price" value="${detail.price}">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="description" class="col-sm-3 col-form-label">Description</label>
-                      <div class="col-sm-9">
-                        <textarea class="form-control" id="description"></textarea>
+                      <label for="manufacturer_id" class="col-sm-3 col-form-label">Discount</label>
+                      <div class="col-sm-5">
+                          <input type="text" class="form-control" name="discount" value="${detail.discount}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="manufacturer_id" class="col-sm-3 col-form-label">ImageURL</label>
+                      <div class="col-sm-5">
+                          <input type="text" class="form-control" name="imageURL" value="${detail.imageURL}">
                       </div>
                     </div>
                   </div>
@@ -95,31 +102,60 @@
                 <!-- /main product data -->
 
                 <!-- Attributes -->
-                <h4>Attributes</h4>
+                <h4>Detail</h4>
                 <hr/>
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group row">
-                      <label for="attr_1" class="col-sm-2 col-form-label">Модель</label>
+                      <label for="attr_1" class="col-sm-2 col-form-label">Warranty</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="attr_1" value="i300" />
+                        <input type="text" class="form-control" name="warranty"" value="${info.warranty}" />
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="attr_2" class="col-sm-2 col-form-label">Цвет</label>
+                      <label for="attr_1" class="col-sm-2 col-form-label">ImageURL1</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="attr_2" value="Серый" />
+                        <input type="text" class="form-control" name="imageURL1" value="${info.imageURL1}" />
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="attr_3" class="col-sm-2 col-form-label">Вес</label>
+                      <label for="attr_2" class="col-sm-2 col-form-label">ImageURL2</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="attr_3" value="2кг" />
+                        <input type="text" class="form-control" name="imageURL2" value="${info.imageURL2}" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="attr_3" class="col-sm-2 col-form-label">ImageURL3</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="imageURL3" value="${info.imageURL3}" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="attr_3" class="col-sm-2 col-form-label">Description</label>
+                      <div class="col-sm-10">
+                        <textarea type="text" class="form-control" name="description">${info.description}</textarea>
                       </div>
                     </div>
                   </div>
                 </div>
                 <!-- /Attributes -->
+                <div class="row ">
+                    <div class="col-md-4 text-center">
+                        
+                        <img src="${info.imageURL1}" class="img-thumbnail img-fluid i" width="259.58px" height="259.58">
+                  </div>
+                  <div class="col-md-4 text-center">
+                    <img src="${info.imageURL2}" class="img-thumbnail img-fluid" width="259.58px" height="259.58">
+                  </div>
+                  <div class="col-md-4 text-center">
+                    <img src="${info.imageURL3}" class="img-thumbnail img-fluid" width="259.58px" height="259.58">
+                  </div>
+                </div>
+                  <br>
+                <div class="align-self-center text-center">
+                    <input type="submit" class="btn btn-success" value="Save" style="width: 200px; height: 50px;">
+                </div>
+                  <br>
               </form>
             </div>
           </div>

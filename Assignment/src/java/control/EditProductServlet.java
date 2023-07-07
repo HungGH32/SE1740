@@ -6,7 +6,6 @@
 package control;
 
 import DAL.DAO;
-import java.sql.Date;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,8 +19,8 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author Dell
  */
-@WebServlet(name="AddProductServlet", urlPatterns={"/add"})
-public class AddProductServlet extends HttpServlet {
+@WebServlet(name="EditProductServlet", urlPatterns={"/edit"})
+public class EditProductServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,9 +32,10 @@ public class AddProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-//        java.util.Date currentDate = new java.util.Date();
-//        java.sql.Date sqlDate = new java.sql.Date(currentDate.getTime());
+        DAO dao = new DAO();
         HttpSession session = request.getSession();//
+        String pid = request.getParameter("id");
+        int product_id = Integer.parseInt(pid);
         
         String name = request.getParameter("name");
         
@@ -53,8 +53,15 @@ public class AddProductServlet extends HttpServlet {
         
         String imageURL = request.getParameter("imageURL");
         
-        DAO dao = new DAO();
-        dao.addProduct(name, category_id, brand_id, price, discount, imageURL);
+        String w = request.getParameter("warranty");
+        int warranty = Integer.parseInt(w);
+        String imageURL1 = request.getParameter("imageURL1");
+        String imageURL2 = request.getParameter("imageURL2");
+        String imageURL3 = request.getParameter("imageURL3");
+        String description = request.getParameter("description");
+        
+        dao.editProduct(name, category_id, brand_id, price, discount, imageURL, product_id);
+        dao.editInfo(warranty, imageURL1, imageURL2, imageURL3, description, product_id);
         response.sendRedirect("manageproduct");
     } 
 

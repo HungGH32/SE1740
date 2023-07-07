@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
@@ -286,7 +287,7 @@ public class DAO {
     // Add product
     public void addProduct(String name, int category_id, int brand_id, double price, float discount, String imageUrl){
         String query ="INSERT INTO [Product] ([name], [category_id], [brand_id], [price], [discount], [imageUrl], [createtime]) \n" +
-                        "VALUES (?, ?, ?, ?, ?, ?, '2023-07-07');";
+                        "VALUES (?, ?, ?, ?, ?, ?, ?);";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -296,6 +297,10 @@ public class DAO {
             ps.setDouble(4,price);
             ps.setFloat(5,discount);
             ps.setString(6,imageUrl);
+            LocalDateTime currentTime = LocalDateTime.now();
+            Date sqlDate = Date.valueOf(currentTime.toLocalDate());
+
+            ps.setDate(7, sqlDate);
             ps.executeUpdate(); // no result ==> no nead result set
         } catch (Exception e) {
         }
@@ -314,7 +319,52 @@ public class DAO {
         
     }
     
-    // Update product
+    // Edit product
+    public void editProduct(String name, int category_id, int brand_id, double price, float discount, String imageUrl, int product_id){
+        String query ="UPDATE [Product]\n" +
+                    "SET [name] = ?,\n" +
+                    "    [category_id] = ?,\n" +
+                    "    [brand_id] = ?,\n" +
+                    "    [price] = ?,\n" +
+                    "    [discount] = ?,\n" +
+                    "    [imageUrl] = ?\n" +
+                    "WHERE [product_id] = ?;";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1,name);
+            ps.setInt(2,category_id);
+            ps.setInt(3,brand_id);
+            ps.setDouble(4,price);
+            ps.setFloat(5,discount);
+            ps.setString(6,imageUrl);
+            ps.setInt(7, product_id);
+            ps.executeUpdate(); // no result ==> no nead result set
+        } catch (Exception e) {
+        }
+    }
+    // Edit Info
+    public void editInfo(int warranty, String imageUrl1, String imageUrl2, String imageUrl3, String description, int info_id){
+        String query ="UPDATE [Info]\n" +
+                        "SET [warranty] = ?,\n" +
+                        "    [imageUrl1] = ?,\n" +
+                        "    [imageUrl2] = ?,\n" +
+                        "    [imageUrl3] = ?,\n" +
+                        "    [description] = ?\n" +
+                        "WHERE [info_id] = ?;";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1,warranty);
+            ps.setString(2,imageUrl1);
+            ps.setString(3,imageUrl2);
+            ps.setString(4,imageUrl3);
+            ps.setString(5,description);
+            ps.setInt(6,info_id);
+            ps.executeUpdate(); // no result ==> no nead result set
+        } catch (Exception e) {
+        }
+    }
     
     // TEST 
     public static void main(String[] args) {
