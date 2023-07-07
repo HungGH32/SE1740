@@ -13,6 +13,7 @@ import java.util.List;
 import model.Account;
 import model.Brand;
 import model.Category;
+import model.Info;
 import model.Product;
 
 /**
@@ -259,7 +260,29 @@ public class DAO {
         }
         return 0;
     }
-    
+    //Get INFO by id
+    public Info getInfoByID(int product_id){
+        List<Info> list = new ArrayList<>();
+        String query = "select * from Info\n" +
+                        "where info_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, product_id);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                return new Info(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
     // Add product
     public void addProduct(String name, int category_id, int brand_id, double price, float discount, String imageUrl){
         String query ="INSERT INTO [Product] ([name], [category_id], [brand_id], [price], [discount], [imageUrl], [createtime]) \n" +

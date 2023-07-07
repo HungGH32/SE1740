@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Info;
 import model.Product;
 
 /**
@@ -36,6 +37,14 @@ public class DetailServlet extends HttpServlet {
         DAO dao = new DAO();
         Product product = dao.getProductByID(id);
         
+        int info_id = Integer.parseInt(id);
+        Info info = dao.getInfoByID(info_id);
+        
+        String description = dao.getInfoByID(info_id).getDescription();
+        String[] descriptionLines = description.split(", ");
+        
+        request.setAttribute("descriptionLines", descriptionLines);
+        request.setAttribute("info", info);
         request.setAttribute("detail", product);
         request.getRequestDispatcher("Detail.jsp").forward(request, response);
         
