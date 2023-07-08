@@ -122,17 +122,21 @@
                                                                 </c:forEach>
                                                             </ul>
                                                         </div>
-							<div class="add-to-cart">
+							<div class="add-to-cart"> 
+                                                            <form action="buy" method="post">
 								<div class="qty-label">
-									Qty
+									Quantity
 									<div class="input-number">
-										<input type="number">
+                                                                            <input type="hidden" name="location" value="1">
+                                                                            <input type="hidden" name="product_id" value="${detail.product_id}">
+                                                                            <input type="number" name="quantity">
 										<span class="qty-up">+</span>
 										<span class="qty-down">-</span>
 									</div>
 								</div>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
+                                                                    <button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                                                            </form>
+                                                        </div>
 
 							<ul class="product-btns">
 								<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
@@ -404,6 +408,7 @@
 		<script src="front-end/js/nouislider.min.js"></script>
 		<script src="front-end/js/jquery.zoom.min.js"></script>
 		<script src="front-end/js/main.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 	</body>
 </html>

@@ -26,7 +26,31 @@ public class DAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
     
-    // Get Product from DB
+    
+    // get all Product no paging
+    public List<Product> getProduct(){
+        List<Product> list = new ArrayList<>();
+        String query = "select * from Product";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                list.add(new Product(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(5),
+                        rs.getString(7),
+                        rs.getFloat(6),
+                        rs.getDate(8)));
+            }
+        } catch (Exception e) {
+            
+        }
+        return list;
+    }
+    
+    // Get Product from DB with paging
     public List<Product> getAllProduct(int page){
         List<Product> list = new ArrayList<>();
         String query = "select * from Product\n" +

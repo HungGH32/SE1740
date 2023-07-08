@@ -10,10 +10,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.Cart;
 import model.Info;
+import model.Item;
 import model.Product;
 
 /**
@@ -35,6 +39,9 @@ public class DetailServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String id = request.getParameter("pid");
         DAO dao = new DAO();
+        
+        List<Product> allProduct = dao.getProduct();
+        
         Product product = dao.getProductByID(id);
         
         int info_id = Integer.parseInt(id);
@@ -43,6 +50,33 @@ public class DetailServlet extends HttpServlet {
         String description = dao.getInfoByID(info_id).getDescription();
         String[] descriptionLines = description.split(", ");
         
+        Cookie[] array = request.getCookies();
+        // cookie(txt)
+        // seperate by " ," each item |id: quantity|,|id: quantity|, ...
+        String text = "";
+        if (array != null){
+            for(Cookie cookie: array){
+                
+                if(cookie.getName().equals("cart")){
+                    text += cookie.getValue();
+                }
+            }
+        }
+        Cart cart = new Cart(text, allProduct); // get Cart
+        List<Item> listItem = cart.getItems();  
+        
+        int listItemSize;
+        if(listItem != null){
+            listItemSize = listItem.size();
+        }else{
+            listItemSize = 0;
+        }
+        
+        
+     // Set up cookie
+     
+     // attribute
+        request.setAttribute("listItemSize", listItemSize);
         request.setAttribute("descriptionLines", descriptionLines);
         request.setAttribute("info", info);
         request.setAttribute("detail", product);

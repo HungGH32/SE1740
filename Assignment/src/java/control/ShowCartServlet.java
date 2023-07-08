@@ -9,22 +9,21 @@ import DAL.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Brand;
 import model.Cart;
-import model.Category;
-import model.Item;
 import model.Product;
 
 /**
  *
  * @author Dell
  */
-public class StoreServlet extends HttpServlet {
+@WebServlet(name="ShowCartServlet", urlPatterns={"/showcart"})
+public class ShowCartServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,34 +35,11 @@ public class StoreServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        // get data from dao 
-        DAO dao = new DAO();
-        
-        int numOfProduct = dao.getNumOfProduct();
-        int lastPage = numOfProduct/15;
-        if(numOfProduct %15 != 0){
-            lastPage ++;
-        }
-        String index = request.getParameter("page");
-        if(index == null){
-            index = "1";
-        }
-        int page = Integer.parseInt(index);
-        
-        //Cookie trial
-            List<Product> allProduct = dao.getProduct();
-        //Cookie trial
-        
-        List<Product> listProduct = dao.getAllProduct(page);
-        List<Category> listCategory = dao.getAllCategory();
-        List<Brand> listBrand = dao.getAllBrand();
-        List<Product> top3_new = dao.getTop3NewArrival();
-// Cart (on going )     
-    // Set up cookie
-        // get cookie from pc
-        Cookie[] array = request.getCookies();
+         DAO dao = new DAO();
+         List<Product> allProduct = dao.getProduct();
+         Cookie[] array = request.getCookies();
         // cookie(txt)
-        // seperate by "-" each item |id: quantity|,|id: quantity|, ...
+        // seperate by " ," each item |id: quantity|,|id: quantity|, ...
         String text = "";
         if (array != null){
             for(Cookie cookie: array){
@@ -74,29 +50,9 @@ public class StoreServlet extends HttpServlet {
             }
         }
         Cart cart = new Cart(text, allProduct); // get Cart
-        List<Item> listItem = cart.getItems();  
-        
-        int listItemSize;
-        if(listItem != null){
-            listItemSize = listItem.size();
-        }else{
-            listItemSize = 0;
-        }
-        
-        
-     // Set up cookie
-     
-     // attribute
-        request.setAttribute("listItemSize", listItemSize);
-// Cart (on going ) 
-        // set data to jsp
-        request.setAttribute("currentPage", page);
-        request.setAttribute("lastPage", lastPage); 
-        request.setAttribute("listProduct", listProduct);
-        request.setAttribute("listCategory", listCategory);
-        request.setAttribute("listBrand", listBrand);
-        request.setAttribute("top3_new", top3_new);
-        request.getRequestDispatcher("Store.jsp").forward(request, response);
+        // 
+        request.setAttribute("cart", cart);
+        request.getRequestDispatcher("MyCart.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
