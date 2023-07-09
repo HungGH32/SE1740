@@ -3,7 +3,7 @@
     Created on : Jul 5, 2023, 8:11:36 PM
     Author     : Dell
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>  
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -125,25 +125,27 @@
 									</a>
 									<div class="cart-dropdown">
                                                                                 <!--ITEM-->
-										<div class="cart-list">
+                                                                                <c:set var="o" value="${requestScope.cart}"/>
+                                                                                <c:forEach items="${o.items}" var="i">
+                                                                                    <div class="cart-list">
 											<div class="product-widget">
 												<div class="product-img">
-													<img src="./img/product01.png" alt="">
+													<img src="${i.product.imageURL}" alt="">
 												</div>
 												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+													<h3 class="product-name"><a href="#">${i.product.name}</a></h3>
+													<h4 class="product-price"><span class="qty">${i.item_quantity}x</span> <fmt:formatNumber pattern="##.#" value="${i.item_price * i.item_quantity}"/>$</h4>
 												</div>
 												<button class="delete"><i class="fa fa-close"></i></button>
 											</div>
-										</div>
+                                                                                    </div>
+                                                                                </c:forEach>
                                                                                 <!--ITEM-->
 										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
 											<h5>SUBTOTAL: $2940.00</h5>
 										</div>
 										<div class="cart-btns">
-											<a href="showcart">View Cart</a>
+											<a href="showcart">Manage Cart</a>
 											<a href="checkout">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>

@@ -208,7 +208,9 @@
                                                                                         </h4>
 										</div>
 										<div class="add-to-cart">
-                                                                                    <form>
+                                                                                    <form action="buy" method="post">
+                                                                                        <input type="hidden" name="product_id" value="${o.product_id}">
+                                                                                        <input type="hidden" name="quantity" value="1">
                                                                                         <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                                                                                     </form>
 										</div>

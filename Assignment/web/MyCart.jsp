@@ -144,17 +144,17 @@
         <td data-th="Quantity" class="col-md-2">
           <button class="btn btn-sm btn-info"><a href="process?num=-1&id=${i.product.product_id}">-</a></button>
           ${i.item_quantity}
-          <button class="btn btn-sm btn-info"><a href="process?num=+1&id=${i.product.product_id}">+</a></button>
+          <button class="btn btn-sm btn-info"><a href="process?num=1&id=${i.product.product_id}">+</a></button>
         </td>
         <td data-th="Price" class="col-md-1">${i.product.price}</td>
         <td data-th="Price" class="col-md-1">${i.product.discount}</td>
-        <td data-th="Subtotal" class="col-md-2">
+        <td data-th="Subtotal" class="col-md-">
           <fmt:formatNumber pattern="##.#" value="${i.item_price * i.item_quantity} " />
         </td>
         <td class="col-md-1 actions">
-          <form action="process" method="post">
-            <input type="hidden" class="btn btn-danger btn-sm" value="${i.product.product_id}" />
-            <input type="submit" class="btn btn-danger btn-sm" value="Return Item" />
+          <form action="process" method="POST">
+              <input type="hidden" name="delete_id" class="btn btn-danger btn-sm" value="${i.product.product_id}"/>
+              <input type="submit" class="btn btn-danger btn-sm" value="Return Item" />
           </form>
         </td>
       </tr>
@@ -168,10 +168,12 @@
             <td class="text-center"><strong>Total</strong></td>
           </tr>
           <tr>
-            <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+            <td><a href="store" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
             <td colspan="2" class="hidden-xs"></td>
+            <td colspan="2" class="hidden-xs"></td>
+            <td colspan="1" class="hidden-xs"></td>
             <td class="hidden-xs text-center"><strong>Total</strong></td>
-            <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+            <td><a href="checkout" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
           </tr>
         </tfoot>
       </table>

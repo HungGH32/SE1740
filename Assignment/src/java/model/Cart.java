@@ -82,7 +82,7 @@ public class Cart {
         try {
             if(text != null && text.length() != 0){
             // Split cookie txt to string each string refer to product:quantity
-            String[] string = text.split(",");
+            String[] string = text.split("-");
             // now split string to get id and quantity
             for(String i: string){
                 String[] s = i.split(":");
