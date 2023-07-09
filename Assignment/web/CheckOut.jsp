@@ -50,47 +50,42 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
-
+                                    <form action="setorder" action="POST">
 					<div class="col-md-7">
 						<!-- Billing Details -->
 						<div class="billing-details">
 							<div class="section-title">
 								<h3 class="title">Billing address</h3>
+                                                                <input class="input" type="hidden" name="user_id" value="${account.account_id}">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="first-name" placeholder="First Name">
+								<input class="input" type="text" name="fullname" placeholder="Full Name">
 							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="last-name" placeholder="Last Name">
+                                                        <div class="form-group">
+								<input class="input" type="text" name="city" placeholder="City">
+							</div>
+                                                        <div class="form-group">
+								<input class="input" type="text" name="address" placeholder="Address">
 							</div>
 							<div class="form-group">
 								<input class="input" type="email" name="email" placeholder="Email">
 							</div>
+                                                        
 							<div class="form-group">
-								<input class="input" type="text" name="address" placeholder="Address">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="City">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="country" placeholder="Country">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-							</div>
-							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Telephone">
+								<input class="input" type="tel" name="phonenumber" placeholder="PhoneNumber">
 							</div>
 						</div>
 						<!-- /Billing Details -->
 
 						<!-- Order notes -->
 						<div class="order-notes">
-							<textarea class="input" placeholder="Order Notes"></textarea>
+                                                    <textarea name="order_note" class="input" placeholder="Order Notes"></textarea>
 						</div>
 						<!-- /Order notes -->
 					</div>
-
+                                        
+                                        <c:set var="o" value="${requestScope.cart}"/>
+                                        <c:set var="totalMoney" value="0"/>
 					<!-- Order Details -->
 					<div class="col-md-5 order-details">
 						<div class="section-title text-center">
@@ -101,15 +96,15 @@
 								<div><strong>PRODUCT</strong></div>
 								<div><strong>TOTAL</strong></div>
 							</div>
+                                                        
 							<div class="order-products">
+                                                            <c:forEach items="${o.items}" var="i">
+                                                                <c:set var="totalMoney" value="${totalMoney + i.item_price * i.item_quantity}"/>
 								<div class="order-col">
-									<div>1x Product Name Goes Here</div>
-									<div>$980.00</div>
+									<div>${i.item_quantity}x ${i.product.name}</div>
+									<div><fmt:formatNumber pattern="##.#" value="${i.item_price * i.item_quantity} " />$</div>
 								</div>
-								<div class="order-col">
-									<div>2x Product Name Goes Here</div>
-									<div>$980.00</div>
-								</div>
+                                                            </c:forEach>
 							</div>
 							<div class="order-col">
 								<div>Shiping</div>
@@ -117,51 +112,46 @@
 							</div>
 							<div class="order-col">
 								<div><strong>TOTAL</strong></div>
-								<div><strong class="order-total">$2940.00</strong></div>
-							</div>
+								<div><strong class="order-total"><fmt:formatNumber pattern="##.#" value="${totalMoney}" />$</strong></div>
+<!--TOTAL MONEY-->                                              <input type="hidden" name="total_money" value="${totalMoney}"/>
+                                                        </div>
 						</div>
 						<div class="payment-method">
 							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-1">
+<!--STATUS-->                                                   <input type="radio" name="status" id="payment-1" value="1">
 								<label for="payment-1">
 									<span></span>
-									Direct Bank Transfer
+									Cash Payment
 								</label>
 								<div class="caption">
 									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 								</div>
 							</div>
 							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-2">
+								<input type="radio" name="status" id="payment-2" value="2">
 								<label for="payment-2">
 									<span></span>
-									Cheque Payment
+									Bank Transfer
 								</label>
 								<div class="caption">
 									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 								</div>
 							</div>
 							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-3">
+								<input type="radio" name="status" id="payment-3" value="3">
 								<label for="payment-3">
 									<span></span>
-									Paypal System
+									QR Pay 
 								</label>
 								<div class="caption">
 									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 								</div>
 							</div>
 						</div>
-						<div class="input-checkbox">
-							<input type="checkbox" id="terms">
-							<label for="terms">
-								<span></span>
-								I've read and accept the <a href="#">terms & conditions</a>
-							</label>
-						</div>
-						<a href="#" class="primary-btn order-submit">Place order</a>
+                                                <input type="submit" class="primary-btn order-submit" value="Place order" />
 					</div>
 					<!-- /Order Details -->
+                                    </form>
 				</div>
 				<!-- /row -->
 			</div>

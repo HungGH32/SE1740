@@ -118,12 +118,14 @@
 
 								<!-- Cart -->
 								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                                                    <c:choose>
+                                                                        <c:when test="${sessionScope.acc != null}">
+                                                                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
 										<div class="qty">${listItemSize}</div>
-									</a>
-									<div class="cart-dropdown">
+                                                                            </a>
+                                                                            <div class="cart-dropdown">
                                                                                 <!--ITEM-->
                                                                                 <c:set var="o" value="${requestScope.cart}"/>
                                                                                 <c:forEach items="${o.items}" var="i">
@@ -148,7 +150,15 @@
 											<a href="showcart">Manage Cart</a>
 											<a href="checkout">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
-									</div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <a href="Login.jsp">
+										<i class="fa fa-shopping-cart"></i>
+										<span>Your Cart</span>
+                                                                            </a>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
 								</div>
 								<!-- /Cart -->
 

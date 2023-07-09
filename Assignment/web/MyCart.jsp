@@ -124,41 +124,43 @@
         
         <tbody>
         <c:set var="o" value="${requestScope.cart}"/>
+        <c:set var="totalMoney" value="0"/>
         <c:set var="tt" value="0"/>
         <c:forEach items="${o.items}" var="i">
             <c:set var="tt" value="${tt + 1}"/>
-      <tr>
-        <td data-th="Price" class="col-md-1">${tt}</td>
-        <td data-th="Product" class="col-md-2">
-          <div class="row">
-            <div class="col-xs-12">
-              <img src="${i.product.imageURL}" alt="..." class="img-responsive" />
-            </div>
-          </div>
-        </td>
-        <td class="col-md-2">
-          <div class="col-xs-12">
-            <h4 class="nomargin">${i.product.name}</h4>
-          </div>
-        </td>
-        <td data-th="Quantity" class="col-md-2">
-          <button class="btn btn-sm btn-info"><a href="process?num=-1&id=${i.product.product_id}">-</a></button>
-          ${i.item_quantity}
-          <button class="btn btn-sm btn-info"><a href="process?num=1&id=${i.product.product_id}">+</a></button>
-        </td>
-        <td data-th="Price" class="col-md-1">${i.product.price}</td>
-        <td data-th="Price" class="col-md-1">${i.product.discount}</td>
-        <td data-th="Subtotal" class="col-md-">
-          <fmt:formatNumber pattern="##.#" value="${i.item_price * i.item_quantity} " />
-        </td>
-        <td class="col-md-1 actions">
-          <form action="process" method="POST">
-              <input type="hidden" name="delete_id" class="btn btn-danger btn-sm" value="${i.product.product_id}"/>
-              <input type="submit" class="btn btn-danger btn-sm" value="Return Item" />
-          </form>
-        </td>
-      </tr>
-    </c:forEach>
+            <c:set var="totalMoney" value="${totalMoney + i.item_price * i.item_quantity}"/>
+            <tr>
+              <td data-th="Price" class="col-md-1">${tt}</td>
+              <td data-th="Product" class="col-md-2">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <img src="${i.product.imageURL}" alt="..." class="img-responsive" />
+                  </div>
+                </div>
+              </td>
+              <td class="col-md-2">
+                <div class="col-xs-12">
+                  <h4 class="nomargin">${i.product.name}</h4>
+                </div>
+              </td>
+              <td data-th="Quantity" class="col-md-2">
+                <button class="btn btn-sm btn-info"><a href="process?num=-1&id=${i.product.product_id}">-</a></button>
+                ${i.item_quantity}
+                <button class="btn btn-sm btn-info"><a href="process?num=1&id=${i.product.product_id}">+</a></button>
+              </td>
+              <td data-th="Price" class="col-md-1">${i.product.price}</td>
+              <td data-th="Price" class="col-md-1">${i.product.discount}</td>
+              <td data-th="Subtotal" class="col-md-">
+                <fmt:formatNumber pattern="##.#" value="${i.item_price * i.item_quantity} " />
+              </td>
+              <td class="col-md-1 actions">
+                <form action="process" method="POST">
+                    <input type="hidden" name="delete_id" class="btn btn-danger btn-sm" value="${i.product.product_id}"/>
+                    <input type="submit" class="btn btn-danger btn-sm" value="Return Item" />
+                </form>
+              </td>
+            </tr>
+        </c:forEach>
         </tbody>
         
         
@@ -172,7 +174,7 @@
             <td colspan="2" class="hidden-xs"></td>
             <td colspan="2" class="hidden-xs"></td>
             <td colspan="1" class="hidden-xs"></td>
-            <td class="hidden-xs text-center"><strong>Total</strong></td>
+            <td class="hidden-xs text-center"><strong>Total: <fmt:formatNumber pattern="##.#" value="${totalMoney}" /></strong></td>
             <td><a href="checkout" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
           </tr>
         </tfoot>

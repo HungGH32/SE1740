@@ -389,9 +389,34 @@ public class DAO {
         } catch (Exception e) {
         }
     }
+    // add order without account
+    public void addOrderNoAcc(String fullname, String address, String email, String phonenumber, String note, int status,float total){
+        String query ="INSERT INTO [Order] ([user_id], [fullname], [address], [email], [phonenumber], [note], [oderdate], [status], [total])\n" +
+                        "VALUES (4, ?, ?, ?, ?, ?, ?, ?, ?);";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            
+            ps.setString(1,fullname);
+            ps.setString(2,address);
+            ps.setString(3,email);
+            ps.setString(4,phonenumber);
+            ps.setString(5,note);
+            
+            LocalDateTime currentTime = LocalDateTime.now();
+            Date sqlDate = Date.valueOf(currentTime.toLocalDate());
+            
+            ps.setDate(6,sqlDate);
+            ps.setInt(7,status);
+             ps.setFloat(8,total);
+             
+            ps.executeUpdate(); // no result ==> no nead result set
+        } catch (Exception e) {
+        }
+        
+    }
     
-    
-    // add order
+    // add order 
     public void addOrder(int user_id, String fullname, String address, String email, String phonenumber, String note, int status,float total){
         String query ="INSERT INTO [Order] ([user_id], [fullname], [address], [email], [phonenumber], [note], [oderdate], [status], [total])\n" +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -438,6 +463,22 @@ public class DAO {
         }
         
     }
+    
+    // get order id 
+    public int getOrderID(){
+        String query ="select top 1 * from [Order]\n" +
+                        "order by Order_id desc";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
     // TEST 
     public static void main(String[] args) {
         try {
@@ -446,12 +487,14 @@ public class DAO {
             List<Category> listC = dao.getAllCategory();
             List<Brand> listB = dao.getAllBrand();
             List<Product> listNew = dao.getTop3NewArrival();
-            System.out.println(dao.getNumOfProduct());
+            
+            System.out.println(dao.getOrderID());
+            dao.addOrderDetail(8, 8, 8, 8);
 //            System.out.println(dao.getProductByID("15"));
 //System.out.println(dao.login("adminHung", "adminHung"));
-            for (Product o : list ){
-                System.out.println(o);
-            }
+//            for (Product o : list ){
+//                System.out.println(o);
+//            }
         } catch (Exception e) {
         }
     }

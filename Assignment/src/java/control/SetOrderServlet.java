@@ -14,18 +14,17 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Account;
 import model.Cart;
+import model.Item;
 import model.Product;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="CheckOutServlet", urlPatterns={"/checkout"})
-public class CheckOutServlet extends HttpServlet {
+@WebServlet(name="SetOrderDetailServlet", urlPatterns={"/setorder"})
+public class SetOrderServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,9 +36,22 @@ public class CheckOutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("acc");
         DAO dao = new DAO();
+        
+        String uid = request.getParameter("user_id");
+        int user_id = Integer.parseInt(uid);
+        String fullname = request.getParameter("fullname");
+        String address = request.getParameter("address");
+        String email = request.getParameter("email");
+        String phonenumber = request.getParameter("phonenumber");
+        String note = request.getParameter("note");
+        String stts = request.getParameter("status");
+        int status = Integer.parseInt(stts);
+        String t = request.getParameter("total_money");
+        Float total = Float.parseFloat(t);
+        
+        //int user_id, String fullname, String address, String email, String phonenumber, String note, int status,float total
+        dao.addOrder(user_id, fullname, address, email, phonenumber, note, status, total);
          List<Product> allProduct = dao.getProduct();
          Cookie[] array = request.getCookies();
         // cookie(txt)
@@ -50,14 +62,26 @@ public class CheckOutServlet extends HttpServlet {
                 
                 if(cookie.getName().equals("cart")){
                     text += cookie.getValue();
+                    cookie.setMaxAge(0); 
+                    response.addCookie(cookie);
                 }
             }
         }
-        Cart cart = new Cart(text, allProduct); // get Cart
-        // 
-        request.setAttribute("account", a);
-        request.setAttribute("cart", cart);
-        request.getRequestDispatcher("CheckOut.jsp").forward(request, response);
+        int order_id = dao.getOrderID();
+        int price = 0;
+        int product_id = 0;
+        int quantity = 0;
+        //int order_id, int product_id, int price, int quantity
+        // get txt and cr cart
+        Cart cart = new Cart(text, allProduct);
+        List<Item> items = cart.getItems();
+        for (Item i : items) {
+            price = (int)(i.getProduct().getPrice() * (1 - i.getProduct().getDiscount()));
+            product_id = i.getProduct().getProduct_id();
+            quantity = i.getItem_quantity();
+            dao.addOrderDetail(order_id, product_id, price, quantity);
+        }
+        response.sendRedirect("OrderDone.jsp");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
