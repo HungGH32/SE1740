@@ -390,6 +390,54 @@ public class DAO {
         }
     }
     
+    
+    // add order
+    public void addOrder(int user_id, String fullname, String address, String email, String phonenumber, String note, int status,float total){
+        String query ="INSERT INTO [Order] ([user_id], [fullname], [address], [email], [phonenumber], [note], [oderdate], [status], [total])\n" +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            
+            ps.setInt(1,user_id);
+            ps.setString(2,fullname);
+            ps.setString(3,address);
+            ps.setString(4,email);
+            ps.setString(5,phonenumber);
+            ps.setString(6,note);
+            
+            LocalDateTime currentTime = LocalDateTime.now();
+            Date sqlDate = Date.valueOf(currentTime.toLocalDate());
+            
+            ps.setDate(7,sqlDate);
+            ps.setInt(8,status);
+             ps.setFloat(9,total);
+             
+            ps.executeUpdate(); // no result ==> no nead result set
+        } catch (Exception e) {
+        }
+        
+    }
+    
+    // addOrderDetail
+    public void addOrderDetail(int order_id, int product_id, int price, int quantity){
+        String query ="INSERT INTO [OrderDetail] ([order_id], [product_id], [price], [quantity], [total])\n" +
+                        "VALUES (?, ?, ?, ?, ?);";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            
+            ps.setInt(1,order_id);
+            ps.setInt(2,product_id);
+            ps.setInt(3,price);
+            ps.setInt(4,quantity);
+            ps.setFloat(5,(quantity*price));
+             
+            ps.executeUpdate(); // no result ==> no nead result set
+        } catch (Exception e) {
+        }
+        
+    }
     // TEST 
     public static void main(String[] args) {
         try {

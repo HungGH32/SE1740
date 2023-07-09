@@ -104,7 +104,7 @@
                                                                      <c:when test="${detail.discount != 0}">
                                                                          <h3 class="product-price">
                                                                             <script>
-                                                                                var roundedPrice = Math.round(${detail.price * detail.discount} * 100) / 100;
+                                                                                var roundedPrice = Math.round(${detail.price * (1 - detail.discount)} * 100) / 100;
                                                                                 document.write(roundedPrice + "$");
                                                                             </script>
                                                                             <del class="product-old-price">${detail.price}$</del>

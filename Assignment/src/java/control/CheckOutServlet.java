@@ -10,18 +10,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Account;
+import java.util.List;
+import model.Cart;
+import model.Product;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="LoginServlet", urlPatterns={"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name="CheckOutServlet", urlPatterns={"/checkout"})
+public class CheckOutServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,19 +35,24 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("user");
-        String password = request.getParameter("pass");
         DAO dao = new DAO();
-        Account acc = dao.login(username, password);
-        if(acc == null){
-            request.setAttribute("mess", "Wrong username or password!");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
-        }else{
-            HttpSession session = request.getSession();
-            session.setAttribute("acc", acc);
-            session.setMaxInactiveInterval(3600);
-            response.sendRedirect("store");
+         List<Product> allProduct = dao.getProduct();
+         Cookie[] array = request.getCookies();
+        // cookie(txt)
+        // seperate by " ," each item |id: quantity|,|id: quantity|, ...
+        String text = "";
+        if (array != null){
+            for(Cookie cookie: array){
+                
+                if(cookie.getName().equals("cart")){
+                    text += cookie.getValue();
+                }
+            }
         }
+        Cart cart = new Cart(text, allProduct); // get Cart
+        // 
+        request.setAttribute("cart", cart);
+        request.getRequestDispatcher("CheckOut.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

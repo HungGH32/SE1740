@@ -4,7 +4,7 @@
     Author     : Dell
 --%>
  
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>  
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -193,10 +193,7 @@
 											<h4 class="product-price">
                                                                                             <c:choose>
                                                                                                 <c:when test="${o.discount != 0}">
-                                                                                                    <script>
-                                                                                                        var roundedPrice = Math.round(${o.price * o.discount} * 100) / 100;
-                                                                                                        document.write(roundedPrice + "$");
-                                                                                                    </script>
+                                                                                                    <fmt:formatNumber pattern="##.#" value="${o.price *(1- o.discount)} " />$
                                                                                                     <del class="product-old-price">${o.price} $</del>
                                                                                                 </c:when>
                                                                                                 <c:otherwise>
@@ -208,12 +205,17 @@
                                                                                         </h4>
 										</div>
 										<div class="add-to-cart">
-                                                                                    <form action="buy" method="post">
+                                                                                    <c:if test="${sessionScope.acc != null}">
+                                                                                      <form action="buy" method="post">
                                                                                         <input type="hidden" name="product_id" value="${o.product_id}">
                                                                                         <input type="hidden" name="quantity" value="1">
-                                                                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                                                                    </form>
-										</div>
+                                                                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                                                                      </form>
+                                                                                    </c:if>
+                                                                                    <c:if test="${sessionScope.acc == null}">
+                                                                                      <button class="add-to-cart-btn"><a href="Login.jsp"><i class="fa fa-shopping-cart"></i> Add to Cart</a></button>
+                                                                                    </c:if>
+                                                                                </div>
 									</div>
                                                         </div>
                                                         <c:if test="${status.count % 3 == 0}">
