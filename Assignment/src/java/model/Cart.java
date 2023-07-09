@@ -82,7 +82,7 @@ public class Cart {
         try {
             if(text != null && text.length() != 0){
             // Split cookie txt to string each string refer to product:quantity
-            String[] string = text.split("-");
+            String[] string = text.split(",");
             // now split string to get id and quantity
             for(String i: string){
                 String[] s = i.split(":");
@@ -90,7 +90,7 @@ public class Cart {
                 int product_id = Integer.parseInt(s[0]);
                 int quantity = Integer.parseInt(s[1]);
                 Product product = getProductByID(product_id, list);
-                Item item = new Item(product, quantity, product.getPrice());
+                Item item = new Item(product, quantity, (product.getPrice() * product.getDiscount()));
                 addItem(item);
                 }
             }

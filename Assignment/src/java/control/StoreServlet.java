@@ -87,9 +87,12 @@ public class StoreServlet extends HttpServlet {
      // Set up cookie
      
      // attribute
+        // 
+        request.setAttribute("cart", cart);
         request.setAttribute("listItemSize", listItemSize);
 // Cart (on going ) 
         // set data to jsp
+        
         request.setAttribute("currentPage", page);
         request.setAttribute("lastPage", lastPage); 
         request.setAttribute("listProduct", listProduct);

@@ -3,7 +3,8 @@
     Created on : Jul 8, 2023, 11:04:38 AM
     Author     : Dell
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en" >
@@ -107,45 +108,69 @@
     <div class="container">
       <table id="cart" class="table table-hover table-condensed">
         <thead>
-          <tr>
-            <th style="width:50%">Product</th>
-            <th style="width:10%">Price</th>
-            <th style="width:8%">Quantity</th>
-            <th style="width:22%" class="text-center">Subtotal</th>
-            <th style="width:10%"></th>
-          </tr>
-          <tr></tr>
-        </thead>
+        <tr>
+          <th class="col-md-1">No</th>
+          <th class="col-md-2">Image</th>
+          <th class="col-md-2">Product Name</th>
+          <th class="col-md-2">Quantity</th>
+          <th class="col-md-1">Price</th>
+          <th class="col-md-1">Discount</th>
+          <th class="col-md-2">Subtotal</th>
+          <th class="col-md-1">Action</th>
+        </tr>
+      </thead>
+        
+        
+        
         <tbody>
-          <tr>
-            <td data-th="Product">
-              <div class="row">
-                <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive" /></div>
-                <div class="col-sm-10">
-                  <h4 class="nomargin">Product 1</h4>
-                  <p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
-                </div>
-              </div>
-            </td>
-            <td data-th="Price">$1.99</td>
-            <td data-th="Quantity">
-              <input type="number" class="form-control text-center" value="1">
-            </td>
-            <td data-th="Subtotal" class="text-center">1.99</td>
-            <td class="actions" data-th="">
-              <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-              <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-            </td>
-          </tr>
+        <c:set var="o" value="${requestScope.cart}"/>
+        <c:set var="tt" value="0"/>
+        <c:forEach items="${o.items}" var="i">
+            <c:set var="tt" value="${tt + 1}"/>
+      <tr>
+        <td data-th="Price" class="col-md-1">${tt}</td>
+        <td data-th="Product" class="col-md-2">
+          <div class="row">
+            <div class="col-xs-12">
+              <img src="${i.product.imageURL}" alt="..." class="img-responsive" />
+            </div>
+          </div>
+        </td>
+        <td class="col-md-2">
+          <div class="col-xs-12">
+            <h4 class="nomargin">${i.product.name}</h4>
+          </div>
+        </td>
+        <td data-th="Quantity" class="col-md-2">
+          <button class="btn btn-sm btn-info"><a href="process?num=-1&id=${i.product.product_id}">-</a></button>
+          ${i.item_quantity}
+          <button class="btn btn-sm btn-info"><a href="process?num=+1&id=${i.product.product_id}">+</a></button>
+        </td>
+        <td data-th="Price" class="col-md-1">${i.product.price}</td>
+        <td data-th="Price" class="col-md-1">${i.product.discount}</td>
+        <td data-th="Subtotal" class="col-md-2">
+          <fmt:formatNumber pattern="##.#" value="${i.item_price * i.item_quantity} " />
+        </td>
+        <td class="col-md-1 actions">
+          <form action="process" method="post">
+            <input type="hidden" class="btn btn-danger btn-sm" value="${i.product.product_id}" />
+            <input type="submit" class="btn btn-danger btn-sm" value="Return Item" />
+          </form>
+        </td>
+      </tr>
+    </c:forEach>
         </tbody>
+        
+        
+        
         <tfoot>
           <tr class="visible-xs">
-            <td class="text-center"><strong>Total 1.99</strong></td>
+            <td class="text-center"><strong>Total</strong></td>
           </tr>
           <tr>
             <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
             <td colspan="2" class="hidden-xs"></td>
-            <td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
+            <td class="hidden-xs text-center"><strong>Total</strong></td>
             <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
           </tr>
         </tfoot>

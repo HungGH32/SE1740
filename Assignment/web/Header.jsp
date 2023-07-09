@@ -121,7 +121,7 @@
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
-										<div class="qty">3</div>
+										<div class="qty">${listItemSize}</div>
 									</a>
 									<div class="cart-dropdown">
                                                                                 <!--ITEM-->

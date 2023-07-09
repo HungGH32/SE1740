@@ -127,14 +127,11 @@
 								<div class="qty-label">
 									Quantity
 									<div class="input-number">
-                                                                            <input type="hidden" name="location" value="1">
                                                                             <input type="hidden" name="product_id" value="${detail.product_id}">
-                                                                            <input type="number" name="quantity">
-										<span class="qty-up">+</span>
-										<span class="qty-down">-</span>
+                                                                            <input type="number" name="quantity" value="1">
 									</div>
 								</div>
-                                                                    <button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                                                                <button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Buy now</button>
                                                             </form>
                                                         </div>
 
@@ -408,7 +405,6 @@
 		<script src="front-end/js/nouislider.min.js"></script>
 		<script src="front-end/js/jquery.zoom.min.js"></script>
 		<script src="front-end/js/main.js"></script>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 	</body>
 </html>
