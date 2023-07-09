@@ -302,9 +302,6 @@ VALUES (44, 12, 'https://hanoicomputercdn.com/media/product/120_49500_ban_phim_c
 INSERT INTO [Info] ([info_id], [warranty], [imageUrl1], [imageUrl2], [imageUrl3], [description])
 VALUES (45, 6, 'https://hanoicomputercdn.com/media/product/120_54071_ban_phim_co_logitech_g512_lightsync_rgb_gx_blue_clicky_switch_0002_3.jpg', 'https://hanoicomputercdn.com/media/product/120_54071_ban_phim_co_logitech_g512_lightsync_rgb_gx_blue_clicky_switch_1.jpg', 'https://hanoicomputercdn.com/media/product/54071_kich_thuoc_ban_phim_co_logitech_g512_lightsync_rgb_gx_clicky_usb_gx_blue.jpg', 'Bàn phím cơ chuyên dụng cho game thủ, Vỏ kim loại phay xước bằng hợp kim vỏ máy bay siêu nhẹ, Độ hoàn thiện chắc chắn, Sử dụng Logitech GX Switch, LED RGB sắc nét, Kết nối USB, Dây liền bọc dù bền bỉ, Kích thước fullsize');
 
-
-
-
 --------USER
 INSERT INTO [User] ([user_id], [fullname], [address], [phonenumber], [country], [DOB], [deleted])
 VALUES (1, N'Trần Đức Hùng', '123 Main Street', '0369572729', 'Việt Nam', '2003-02-03', 0);
@@ -312,10 +309,48 @@ INSERT INTO [User] ([user_id], [fullname], [address], [phonenumber], [country], 
 VALUES (2, N'Nguyễn Đức Hùng', '123 Main Street', '0369572729', 'Việt Nam', '2003-02-03', 0);
 
 --------Order
+INSERT INTO [Order] ([user_id], [fullname], [address], [email], [phonenumber], [note], [oderdate], [status], [total])
+VALUES (1, N'Trần Đức Hùng', '123 Main St', 'hung03022003@gmail.com', '0369573721', 'Some notes', '2023-07-01', 1, 2509.0);
 
+INSERT INTO [Order] ([user_id], [fullname], [address], [email], [phonenumber], [note], [oderdate], [status], [total])
+VALUES (4, N'Trần Đức Hùng', '123 Main St', 'hung03022003@gmail.com', '0369573721', 'Some notes', '2023-07-01', 1, 204.0);
+
+INSERT INTO [Order] ([user_id], [fullname], [address], [email], [phonenumber], [note], [oderdate], [status], [total])
+VALUES (1, N'Trần Đức Hùng', '123 Main St', 'hung03022003@gmail.com', '0369573721', 'Some notes', '2023-07-01', 1, 77.0);
+
+INSERT INTO [Order] ([user_id], [fullname], [address], [email], [phonenumber], [note], [oderdate], [status], [total])
+VALUES (1, N'Trần Đức Hùng', '123 Main St', 'hung03022003@gmail.com', '0369573721', 'Some notes', '2023-07-01', 1, 158.0);
+
+INSERT INTO [Order] ([user_id], [fullname], [address], [email], [phonenumber], [note], [oderdate], [status], [total])
+VALUES (4, N'Trần Đức Hùng', '123 Main St', 'hung03022003@gmail.com', '0369573721', 'Some notes', '2023-07-01', 1, 204.0);
 
 
 --------Order Detail
+INSERT INTO [OrderDetail] ([order_id], [product_id], [price], [quantity], [total])
+VALUES (1, 6, 102, 2, 204.0);
+
+INSERT INTO [OrderDetail] ([order_id], [product_id], [price], [quantity], [total])
+VALUES (1, 7, 77, 1, 77.0);
+
+INSERT INTO [OrderDetail] ([order_id], [product_id], [price], [quantity], [total])
+VALUES (1, 8, 158, 2, 316.0);
+
+INSERT INTO [OrderDetail] ([order_id], [product_id], [price], [quantity], [total])
+VALUES (1, 6, 102, 1, 102.0);
+
+INSERT INTO [OrderDetail] ([order_id], [product_id], [price], [quantity], [total])
+VALUES (6, 6, 102, 2, 204.0);
+
+INSERT INTO [OrderDetail] ([order_id], [product_id], [price], [quantity], [total])
+VALUES (3, 7, 77, 1, 77.0);
+
+INSERT INTO [OrderDetail] ([order_id], [product_id], [price], [quantity], [total])
+VALUES (4, 8, 158, 1, 158.0);
+
+INSERT INTO [OrderDetail] ([order_id], [product_id], [price], [quantity], [total])
+VALUES (7, 6, 102, 2, 204.0);
+
+
 
 
 ---------Feedback
