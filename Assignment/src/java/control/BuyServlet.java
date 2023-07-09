@@ -93,13 +93,11 @@ public class BuyServlet extends HttpServlet {
                 
                 if(cookie.getName().equals("cart")){
                     text += cookie.getValue();
-                    cookie.setMaxAge(0); // Buy ==> clear
+                    cookie.setMaxAge(0); 
                     response.addCookie(cookie);
                 }
             }
         }
-        String l =request.getParameter("location");
-        int location = Integer.parseInt(l);
         
         String quantity =request.getParameter("quantity");
         String pid = request.getParameter("product_id");
@@ -127,8 +125,10 @@ public class BuyServlet extends HttpServlet {
 //            request.setAttribute("pid", pid);
 //            request.getRequestDispatcher("detail").forward(request, response);
 //        }else{
-//            request.getRequestDispatcher("shop").forward(request, response);
-//        }
+        request.getRequestDispatcher("store").forward(request, response);
+
+
+    
     }
 
     /** 
