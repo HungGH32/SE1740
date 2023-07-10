@@ -14,7 +14,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Account;
 import model.Cart;
 import model.Info;
 import model.Item;
@@ -37,6 +39,8 @@ public class DetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        Account a = (Account) session.getAttribute("acc");
         String id = request.getParameter("pid");
         DAO dao = new DAO();
         
@@ -76,6 +80,7 @@ public class DetailServlet extends HttpServlet {
      // Set up cookie
      
      // attribute
+        request.setAttribute("account", a);
         request.setAttribute("listItemSize", listItemSize);
         request.setAttribute("descriptionLines", descriptionLines);
         request.setAttribute("info", info);

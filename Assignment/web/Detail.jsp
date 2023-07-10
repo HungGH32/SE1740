@@ -224,21 +224,21 @@
 										<!-- Review Form -->
 										<div class="col-md-3">
 											<div id="review-form">
-												<form class="review-form">
-													<input class="input" type="text" placeholder="Your Name">
-													<input class="input" type="email" placeholder="Your Email">
-													<textarea class="input" placeholder="Your Review"></textarea>
-													<div class="input-rating">
-														<span>Your Rating: </span>
-														<div class="stars">
-															<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-															<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-															<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-															<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
-														</div>
-													</div>
-													<button class="primary-btn">Submit</button>
+                                                                                            <strong>ADD YOUR COMMENT</strong>
+                                                                                            <br>
+                                                                                                <form action="feedback" method="post" class="review-form">
+                                                                                                        <input class="input" type="hidden" name="user_id" value="${account.account_id}">
+                                                                                                        <input class="input" type="hidden" name="product_id" value="${detail.product_id}">
+                                                                                                        <textarea class="input" placeholder="Your Review" name="feedback"></textarea>
+                                                                                                         <c:choose>
+                                                                                                            <c:when test="${sessionScope.acc != null}">
+                                                                                                                <button type="submit" class="primary-btn">Submit</button>
+                                                                                                            </c:when>
+                                                                                                            <c:otherwise>
+                                                                                                                <a href="Login.jsp" class="primary-btn"> Submit</a>
+                                                                                                            </c:otherwise>
+                                                                                                        </c:choose>
+                                                                                            
 												</form>
 											</div>
 										</div>

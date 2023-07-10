@@ -159,11 +159,13 @@
 						<div class="store-filter clearfix ">
 							<div class="store-sort">
 								<label>
-									Sort By:
-									<select class="input-select">
+                                                                    <form action="sortby" method="post">
+                                                                        Sort By:
+                                                                        <select class="input-select" name="sort">
 										<option value="0">PRICE - LOW TO HIGH</option>
 										<option value="1">PRICE - HIGH TO LOW</option>
 									</select>
+                                                                    </form>
 								</label>
 							</div>
 						</div>

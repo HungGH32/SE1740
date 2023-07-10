@@ -479,6 +479,29 @@ public class DAO {
         }
         return 0;
     }
+    
+    // addOrderDetail
+    public void addFeedback(int user_id, int product_id, String note){
+        String query ="INSERT INTO [Feedback] ([user_id], [product_id], [note], [create_time], [update_time])\n" +
+                            "VALUES (?, ?, ?, ?, ?);";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            
+            ps.setInt(1,user_id);
+            ps.setInt(2,product_id);
+            ps.setString(3,note);
+            LocalDateTime currentTime = LocalDateTime.now();
+            Date sqlDate = Date.valueOf(currentTime.toLocalDate());
+            
+            ps.setDate(4, sqlDate);
+            ps.setDate(5, sqlDate);
+            ps.executeUpdate();
+            ps.executeUpdate(); // no result ==> no nead result set
+        } catch (Exception e) {
+        }
+        
+    }
     // TEST 
     public static void main(String[] args) {
         try {

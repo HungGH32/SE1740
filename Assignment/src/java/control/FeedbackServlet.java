@@ -13,14 +13,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="EditProductServlet", urlPatterns={"/edit"})
-public class EditProductServlet extends HttpServlet {
+@WebServlet(name="FeedbackServlet", urlPatterns={"/feedback"})
+public class FeedbackServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,35 +32,15 @@ public class EditProductServlet extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DAO dao = new DAO();
-        String pid = request.getParameter("id");
+        String uid = request.getParameter("user_id");
+        int user_id = Integer.parseInt(uid);
+        String pid = request.getParameter("product_id");
         int product_id = Integer.parseInt(pid);
+        String feedback = request.getParameter("feedback");
         
-        String name = request.getParameter("name");
+        dao.addFeedback(user_id, product_id, feedback);
+        response.sendRedirect("detail");
         
-        String category = request.getParameter("category");
-        int category_id = Integer.parseInt(category);
-        
-        String brand = request.getParameter("brand");
-        int brand_id = Integer.parseInt(brand);
-        
-        String add_price = request.getParameter("price");
-        double price = Double.parseDouble(add_price);
-        
-        String add_discount = request.getParameter("discount");
-        float discount = Float.parseFloat(add_discount);
-        
-        String imageURL = request.getParameter("imageURL");
-        
-        String w = request.getParameter("warranty");
-        int warranty = Integer.parseInt(w);
-        String imageURL1 = request.getParameter("imageURL1");
-        String imageURL2 = request.getParameter("imageURL2");
-        String imageURL3 = request.getParameter("imageURL3");
-        String description = request.getParameter("description");
-        
-        dao.editProduct(name, category_id, brand_id, price, discount, imageURL, product_id);
-        dao.editInfo(warranty, imageURL1, imageURL2, imageURL3, description, product_id);
-        response.sendRedirect("manageproduct");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
