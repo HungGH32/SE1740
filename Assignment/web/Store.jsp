@@ -109,11 +109,9 @@
 							<div class="checkbox-filter">
                                                             <c:forEach items="${listBrand}" var="o">
                                                                 <div class="input-checkbox">
-									<input type="checkbox" id="brand-${o.brand_id}">
 									<label for="brand-${o.brand_id}">
 										<span></span>
 										${o.brand_name}
-										<small>(578)</small>
 									</label>
 								</div>
                                                             </c:forEach>

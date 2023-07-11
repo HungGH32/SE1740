@@ -6,7 +6,6 @@
 package control;
 
 import DAL.DAO;
-import java.sql.Date;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,13 +14,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.Account;
+import model.Brand;
+import model.Category;
+import model.Order;
+import model.Product;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="AddProductServlet", urlPatterns={"/add"})
-public class AddProductServlet extends HttpServlet {
+@WebServlet(name="ManageOrderServlet", urlPatterns={"/manageorder"})
+public class ManageOrderServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,29 +38,19 @@ public class AddProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-//        java.util.Date currentDate = new java.util.Date();
-//        java.sql.Date sqlDate = new java.sql.Date(currentDate.getTime());
-//        HttpSession session = request.getSession();//
-        
-        String name = request.getParameter("name");
-        
-        String category = request.getParameter("category");
-        int category_id = Integer.parseInt(category);
-        
-        String brand = request.getParameter("brand");
-        int brand_id = Integer.parseInt(brand);
-        
-        String add_price = request.getParameter("price");
-        double price = Double.parseDouble(add_price);
-        
-        String add_discount = request.getParameter("discount");
-        float discount = Float.parseFloat(add_discount);
-        
-        String imageURL = request.getParameter("imageURL");
-        
+        HttpSession session = request.getSession();
+        Account a = (Account) session.getAttribute("acc");
+        // get data from dao 
         DAO dao = new DAO();
-        dao.addProduct(name, category_id, brand_id, price, discount, imageURL);
-        response.sendRedirect("manageproduct");
+        List<Order> listOrder = dao.getAllOrder();
+        
+        // set data to jsp
+        if (a != null){
+            request.setAttribute("listOrder", listOrder);
+            request.getRequestDispatcher("OrderManage.jsp").forward(request, response);
+        }else{
+            response.sendRedirect("Login.jsp");
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

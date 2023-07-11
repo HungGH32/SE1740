@@ -56,9 +56,9 @@
 						<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
                                                 <c:if test="${sessionScope.acc.role == 1}">
                                                     <li><a href="manageproduct"><i class="fa fa-gear"></i> Manage Product</a></li>
+                                                    <li><a href="manageorder"><i class="fa fa-gear"></i> Manage Order</a></li>
                                                 </c:if>
                                                 <c:if test="${sessionScope.acc.role == 0}">
                                                     <li><a href="AccountManage.jsp"><i class="fa fa-gear"></i> Manage Account</a></li>
@@ -68,6 +68,7 @@
                                                         <li><a href="logout"><i class="fa fa-user-o"></i> Sign out</a></li>
                                                     </c:when>
                                                     <c:otherwise>
+                                                        <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
                                                         <li><a href="Login.jsp"><i class="fa fa-user-o"></i> Sign in / Sign up</a></li>
                                                     </c:otherwise>
                                                 </c:choose>

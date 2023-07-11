@@ -39,7 +39,7 @@ public class FeedbackServlet extends HttpServlet {
         String feedback = request.getParameter("feedback");
         
         dao.addFeedback(user_id, product_id, feedback);
-        response.sendRedirect("detail");
+        response.sendRedirect("detail?pid=" + pid);
         
     } 
 

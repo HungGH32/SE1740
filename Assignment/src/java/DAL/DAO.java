@@ -15,6 +15,8 @@ import model.Account;
 import model.Brand;
 import model.Category;
 import model.Info;
+import model.Order;
+import model.OrderDetail;
 import model.Product;
 
 /**
@@ -210,6 +212,58 @@ public class DAO {
         return list;
     }
     
+    // get Order 
+    public List<Order> getAllOrder(){
+        List<Order> list = new ArrayList<>();   
+        String query = "select * from [Order]";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                list.add(new Order(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getFloat(10)
+                ));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    // get OrderDetail by order_id 
+    public List<OrderDetail> getOrderDetailByOrderID(int order_id){
+        List<OrderDetail> list = new ArrayList<>();   
+        String query = "select * from [OrderDetail] where order_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, order_id);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                list.add(new OrderDetail(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getFloat(6)
+                ));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
+    
+    
     // check account to login
     public Account login(String user, String pass){
         String query ="select * from Account\n" +
@@ -287,7 +341,6 @@ public class DAO {
     }
     //Get INFO by id
     public Info getInfoByID(int product_id){
-        List<Info> list = new ArrayList<>();
         String query = "select * from Info\n" +
                         "where info_id = ?";
         try {
@@ -303,6 +356,33 @@ public class DAO {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    //Get Order by id
+    public Order getOrderByID(int order_id){
+        String query = "select * from [Order] where Order_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, order_id);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                return new Order(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getFloat(10)
+                );
             }
         } catch (Exception e) {
         }
@@ -337,6 +417,34 @@ public class DAO {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1,pid);
+            ps.executeUpdate(); 
+        } catch (Exception e) {
+        }
+        
+    }
+    
+    // Delete Order
+    public void deleteOrder(int order_dl){
+        String query ="delete from [Order] \n" +
+                        "where Order_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, order_dl);
+            ps.executeUpdate(); 
+        } catch (Exception e) {
+        }
+        
+    }
+    
+    // Delete OrderDetail
+    public void deleteOrderDetail(int order_dl){
+        String query ="delete from [OrderDetail]\n" +
+                        "where order_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, order_dl);
             ps.executeUpdate(); 
         } catch (Exception e) {
         }
@@ -389,6 +497,26 @@ public class DAO {
         } catch (Exception e) {
         }
     }
+    
+    //Edit Order
+    public void editOrder(String address, String note, int status, int Order_id){
+        String query ="UPDATE [Order]\n" +
+                        "SET [address] = ?,\n" +
+                        "    [note] = ?,\n" +
+                        "    [status] = ?\n" +
+                        "WHERE [Order_id] = ?;";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1,address);
+            ps.setString(2,note);
+            ps.setInt(3,status);
+            ps.setInt(4,Order_id);
+            ps.executeUpdate(); // no result ==> no nead result set
+        } catch (Exception e) {
+        }
+    }
+    
     // add order without account
     public void addOrderNoAcc(String fullname, String address, String email, String phonenumber, String note, int status,float total){
         String query ="INSERT INTO [Order] ([user_id], [fullname], [address], [email], [phonenumber], [note], [oderdate], [status], [total])\n" +
@@ -502,22 +630,23 @@ public class DAO {
         }
         
     }
+    
     // TEST 
     public static void main(String[] args) {
         try {
             DAO dao = new DAO();
-            List<Product> list = dao.getProductByName("Lo");
+            List<OrderDetail> list = dao.getOrderDetailByOrderID(1);
             List<Category> listC = dao.getAllCategory();
             List<Brand> listB = dao.getAllBrand();
             List<Product> listNew = dao.getTop3NewArrival();
             
-            System.out.println(dao.getOrderID());
-            dao.addOrderDetail(8, 8, 8, 8);
+            System.out.println(dao.getOrderByID(1));
+            
 //            System.out.println(dao.getProductByID("15"));
 //System.out.println(dao.login("adminHung", "adminHung"));
-//            for (Product o : list ){
-//                System.out.println(o);
-//            }
+            for (OrderDetail o : list ){
+                System.out.println(o);
+            }
         } catch (Exception e) {
         }
     }
