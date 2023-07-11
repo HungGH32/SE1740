@@ -44,7 +44,10 @@ public class DAO {
                         rs.getDouble(5),
                         rs.getString(7),
                         rs.getFloat(6),
-                        rs.getDate(8)));
+                        rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)
+                ));
             }
         } catch (Exception e) {
             
@@ -73,7 +76,10 @@ public class DAO {
                                     rs.getDouble(5),
                                     rs.getString(7),
                                     rs.getFloat(6),
-                                    rs.getDate(8)));
+                                    rs.getDate(8),
+                                    rs.getInt(3),
+                                    rs.getInt(4)
+                            ));
                         }
                     } catch (Exception e) {
                         
@@ -96,7 +102,9 @@ public class DAO {
                                     rs.getDouble(5),
                                     rs.getString(7),
                                     rs.getFloat(6),
-                                    rs.getDate(8)));
+                                    rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
                         }
                     } catch (Exception e) {
                         
@@ -119,7 +127,9 @@ public class DAO {
                                     rs.getDouble(5),
                                     rs.getString(7), 
                                     rs.getFloat(6),
-                                    rs.getDate(8)));
+                                    rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
                         }
                     } catch (Exception e) {
                         
@@ -188,7 +198,9 @@ public class DAO {
                             rs.getDouble(5),
                             rs.getString(7),
                             rs.getFloat(6),
-                            rs.getDate(8)));
+                            rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
                 }
             } catch (Exception e) {
 
@@ -209,7 +221,9 @@ public class DAO {
                             rs.getDouble(5),
                             rs.getString(7),
                             rs.getFloat(6),
-                            rs.getDate(8)));
+                            rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
                 }
             } catch (Exception e) {
 
@@ -230,7 +244,9 @@ public class DAO {
                             rs.getDouble(5),
                             rs.getString(7),
                             rs.getFloat(6),
-                            rs.getDate(8)));
+                            rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
                 }
             } catch (Exception e) {
 
@@ -257,7 +273,9 @@ public class DAO {
                             rs.getDouble(5),
                             rs.getString(7),
                             rs.getFloat(6),
-                            rs.getDate(8)));
+                            rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
                 }
             } catch (Exception e) {
 
@@ -278,7 +296,9 @@ public class DAO {
                             rs.getDouble(5),
                             rs.getString(7),
                             rs.getFloat(6),
-                            rs.getDate(8)));
+                            rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
                 }
             } catch (Exception e) {
 
@@ -299,7 +319,9 @@ public class DAO {
                             rs.getDouble(5),
                             rs.getString(7),
                             rs.getFloat(6),
-                            rs.getDate(8)));
+                            rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
                 }
             } catch (Exception e) {
 
@@ -328,7 +350,9 @@ public class DAO {
                             rs.getDouble(5),
                             rs.getString(7),
                             rs.getFloat(6),
-                            rs.getDate(8)));
+                            rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
                 }
             } catch (Exception e) {
 
@@ -350,7 +374,9 @@ public class DAO {
                             rs.getDouble(5),
                             rs.getString(7),
                             rs.getFloat(6),
-                            rs.getDate(8)));
+                            rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
                 }
             } catch (Exception e) {
 
@@ -372,7 +398,9 @@ public class DAO {
                             rs.getDouble(5),
                             rs.getString(7),
                             rs.getFloat(6),
-                            rs.getDate(8)));
+                            rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
                 }
             } catch (Exception e) {
 
@@ -398,7 +426,9 @@ public class DAO {
                         rs.getDouble(5),
                         rs.getString(7),
                         rs.getFloat(6),
-                        rs.getDate(8));
+                        rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4));
             }
         } catch (Exception e) {
             
@@ -424,7 +454,9 @@ public class DAO {
                         rs.getDouble(5),
                         rs.getString(7),
                         rs.getFloat(6),
-                        rs.getDate(8)));
+                        rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
             }
         } catch (Exception e) {
             
@@ -447,7 +479,9 @@ public class DAO {
                         rs.getDouble(5),
                         rs.getString(7),
                         rs.getFloat(6),
-                        rs.getDate(8)));
+                        rs.getDate(8),
+                        rs.getInt(3),
+                        rs.getInt(4)));
             }
         } catch (Exception e) {
         }

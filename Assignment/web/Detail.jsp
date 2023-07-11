@@ -135,25 +135,10 @@
                                                             </form>
                                                         </div>
 
-							<ul class="product-btns">
-								<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
-								<li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>
-							</ul>
-
 							<ul class="product-links">
-								<li>Category:</li>
-								<li><a href="#">Headphones</a></li>
-								<li><a href="#">Accessories</a></li>
+								<li><a href="category?cid=${detail.category_id}">Related Category</a></li>
+								<li><a href="category?br=${detail.brand_id}">Related Brand</a></li>
 							</ul>
-
-							<ul class="product-links">
-								<li>Share:</li>
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-								<li><a href="#"><i class="fa fa-envelope"></i></a></li>
-							</ul>
-
 						</div>
 					</div>
 					<!-- /Product details -->
@@ -163,15 +148,15 @@
 						<div id="product-tab">
 							<!-- product tab nav -->
 							<ul class="tab-nav">
-								<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-								<li><a data-toggle="tab" href="#tab2">Details</a></li>
-								<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
+								<li class="active"><a data-toggle="tab" href="#tab1">Description </a></li>
+<!--								<li><a data-toggle="tab" href="#tab2">b</a></li>-->
+								<li><a data-toggle="tab" href="#tab3">Reviews</a></li>
 							</ul>
 							<!-- /product tab nav -->
 
 							<!-- product tab content -->
 							<div class="tab-content">
-								<!-- tab1  -->
+<!--								 tab1  -->
 								<div id="tab1" class="tab-pane fade in active">
 									<div class="row">
 										<div class="col-md-12">
@@ -179,9 +164,9 @@
 										</div>
 									</div>
 								</div>
-								<!-- /tab1  -->
+<!--								 /tab1  
 
-								<!-- tab2  -->
+								 tab2  
 								<div id="tab2" class="tab-pane fade in">
 									<div class="row">
 										<div class="col-md-12">
@@ -189,7 +174,7 @@
 										</div>
 									</div>
 								</div>
-								<!-- /tab2  -->
+								 /tab2  -->
 
 								<!-- tab3  -->
 								<div id="tab3" class="tab-pane fade in">
@@ -210,13 +195,13 @@
 													</li>
 													
 												</ul>
-												<ul class="reviews-pagination">
+<!--												<ul class="reviews-pagination">
 													<li class="active">1</li>
 													<li><a href="#">2</a></li>
 													<li><a href="#">3</a></li>
 													<li><a href="#">4</a></li>
 													<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-												</ul>
+												</ul>-->
 											</div>
 										</div>
 										<!-- /Reviews -->
@@ -259,10 +244,10 @@
 		<!-- /SECTION -->
 
 		<!-- Section -->
-		<div class="section">
-			<!-- container -->
+<!--		<div class="section">
+			 container 
 			<div class="container">
-				<!-- row -->
+				 row 
 				<div class="row">
 
 					<div class="col-md-12">
@@ -271,7 +256,7 @@
 						</div>
 					</div>
 
-					<!-- product -->
+					 product 
 					<div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
@@ -297,9 +282,9 @@
 							</div>
 						</div>
 					</div>
-					<!-- /product -->
+					 /product 
 
-					<!-- product -->
+					 product 
 					<div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
@@ -330,11 +315,11 @@
 							</div>
 						</div>
 					</div>
-					<!-- /product -->
+					 /product 
 
 					<div class="clearfix visible-sm visible-xs"></div>
 
-					<!-- product -->
+					 product 
 					<div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
@@ -362,9 +347,9 @@
 							</div>
 						</div>
 					</div>
-					<!-- /product -->
+					 /product 
 
-					<!-- product -->
+					 product 
 					<div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
@@ -387,14 +372,14 @@
 							</div>
 						</div>
 					</div>
-					<!-- /product -->
+					 /product 
 
 				</div>
-				<!-- /row -->
+				 /row 
 			</div>
-			<!-- /container -->
+			 /container 
 		</div>
-		<!-- /Section -->
+		 /Section -->
 
 		<jsp:include page="Footer.jsp"></jsp:include>
 

@@ -70,7 +70,7 @@ public class CategoryServlet extends HttpServlet {
             request.setAttribute("listCategory", listCategory);
             request.setAttribute("listBrand", listBrand);
             request.setAttribute("top3_new", top3_new);
-            
+            request.setAttribute("brand_clicked", brand_id);
             request.setAttribute("category_clicked", category_id);
             request.getRequestDispatcher("Store.jsp").forward(request, response);
         }
