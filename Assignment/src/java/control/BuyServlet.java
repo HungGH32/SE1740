@@ -14,7 +14,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Account;
 import model.Brand;
 import model.Cart;
 import model.Category;
@@ -66,22 +68,20 @@ public class BuyServlet extends HttpServlet {
     throws ServletException, IOException {
         // get data from dao 
         DAO dao = new DAO();
-//        int numOfProduct = dao.getNumOfProduct();
-//        int lastPage = numOfProduct/15;
-//        if(numOfProduct %15 != 0){
-//            lastPage ++;
+//        //
+//        HttpSession session = request.getSession();
+//        Account a = (Account) session.getAttribute("acc");
+//        if (a != null){
+//            String account_id = Integer.toString(a.getAccount_id());
+//        }else{
+//            response.sendRedirect("Login.jsp");
 //        }
-//        String index = request.getParameter("page");
-//        if(index == null){
-//            index = "1";
-//        }
-//        int page = Integer.parseInt(index);
-        
-        List<Product> allProduct = dao.getProduct();
-//        List<Category> listCategory = dao.getAllCategory();
-//        List<Brand> listBrand = dao.getAllBrand();
-//        List<Product> top3_new = dao.getTop3NewArrival();
-// Cart (on going )     
+//        //
+        HttpSession session = request.getSession();
+        Account a = (Account) session.getAttribute("acc");
+        if (a != null){
+            String account_id = Integer.toString(a.getAccount_id());
+            List<Product> allProduct = dao.getProduct();   
     // Set up cookie
         // get cookie from pc
         Cookie[] array = request.getCookies();
@@ -91,7 +91,7 @@ public class BuyServlet extends HttpServlet {
         if (array != null){
             for(Cookie cookie: array){
                 
-                if(cookie.getName().equals("cart")){
+                if(cookie.getName().equals("cart" + account_id)){
                     text += cookie.getValue();
                     cookie.setMaxAge(0); 
                     response.addCookie(cookie);
@@ -106,29 +106,14 @@ public class BuyServlet extends HttpServlet {
         }else{
             text = text + "-" + pid + ":" + quantity; 
         }
-        Cookie c = new Cookie("cart", text); // string name + string value
+        Cookie c = new Cookie("cart" + account_id, text); // string name + string value
+
         c.setMaxAge(2*24*60*60); // 2 day
-        response.addCookie(c);
-        
-     // Set up cookie
-     
-     // attribute
-// Cart (on going ) 
-        // set data to jsp
-//        request.setAttribute("currentPage", page);
-//        request.setAttribute("lastPage", lastPage); 
-//        request.setAttribute("listProduct", listProduct);
-//        request.setAttribute("listCategory", listCategory);
-//        request.setAttribute("listBrand", listBrand);
-//        request.setAttribute("top3_new", top3_new);
-//        if(location == 1){
-//            request.setAttribute("pid", pid);
-//            request.getRequestDispatcher("detail").forward(request, response);
-//        }else{
-        request.getRequestDispatcher("store").forward(request, response);
-
-
-    
+        response.addCookie(c); 
+        response.sendRedirect("store");
+        }else{
+            response.sendRedirect("Login.jsp");
+        }
     }
 
     /** 

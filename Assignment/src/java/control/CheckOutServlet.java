@@ -37,9 +37,12 @@ public class CheckOutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        //
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("acc");
-        DAO dao = new DAO();
+        if (a != null){
+            String account_id = Integer.toString(a.getAccount_id());
+            DAO dao = new DAO();
          List<Product> allProduct = dao.getProduct();
          Cookie[] array = request.getCookies();
         // cookie(txt)
@@ -48,7 +51,7 @@ public class CheckOutServlet extends HttpServlet {
         if (array != null){
             for(Cookie cookie: array){
                 
-                if(cookie.getName().equals("cart")){
+                if(cookie.getName().equals("cart" + account_id)){
                     text += cookie.getValue();
                 }
             }
@@ -58,6 +61,10 @@ public class CheckOutServlet extends HttpServlet {
         request.setAttribute("account", a);
         request.setAttribute("cart", cart);
         request.getRequestDispatcher("CheckOut.jsp").forward(request, response);
+        }else{
+            response.sendRedirect("Login.jsp");
+        }
+        //
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -128,7 +128,9 @@
                                                                             <div class="cart-dropdown">
                                                                                 <!--ITEM-->
                                                                                 <c:set var="o" value="${requestScope.cart}"/>
+                                                                                <c:set var="totalMoney" value="0"/>
                                                                                 <c:forEach items="${o.items}" var="i">
+                                                                                    <c:set var="totalMoney" value="${totalMoney + i.item_price * i.item_quantity}"/>
                                                                                     <div class="cart-list">
 											<div class="product-widget">
 												<div class="product-img">
@@ -144,7 +146,7 @@
                                                                                 </c:forEach>
                                                                                 <!--ITEM-->
 										<div class="cart-summary">
-											<h5>SUBTOTAL: $2940.00</h5>
+											<h5>SUBTOTAL: <fmt:formatNumber pattern="##.#" value="${totalMoney}"/></h5>
 										</div>
 										<div class="cart-btns">
 											<a href="showcart">Manage Cart</a>

@@ -13,7 +13,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Account;
 import model.Brand;
 import model.Cart;
 import model.Category;
@@ -37,6 +39,15 @@ public class StoreServlet extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         // get data from dao 
+                //
+        HttpSession session = request.getSession();
+        Account a = (Account) session.getAttribute("acc");
+        String account_id = "";
+        if(a!= null){
+             account_id = Integer.toString(a.getAccount_id());
+        }
+        
+        //
         DAO dao = new DAO();
         int numOfProduct = dao.getNumOfProduct();
         int lastPage = numOfProduct/15;
@@ -72,7 +83,7 @@ public class StoreServlet extends HttpServlet {
         if (array != null){
             for(Cookie cookie: array){
                 
-                if(cookie.getName().equals("cart")){
+                if(cookie.getName().equals("cart" + account_id)){
                     text += cookie.getValue();
                 }
             }
