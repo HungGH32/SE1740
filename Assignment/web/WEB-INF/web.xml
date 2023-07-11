@@ -13,4 +13,7 @@
             30
         </session-timeout>
     </session-config>
+
+<!--    <welcome-file>/store</welcome-file>-->
+
 </web-app>
