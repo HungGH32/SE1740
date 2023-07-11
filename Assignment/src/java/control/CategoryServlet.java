@@ -36,20 +36,45 @@ public class CategoryServlet extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String category_id = request.getParameter("cid");
+        String brand_id = request.getParameter("br");
+        String s = request.getParameter("sort");
+        int sort = 0;
+        if(s != null){
+            sort = Integer.parseInt(s); 
+        }
         // get category id
         DAO dao =new DAO();
-        List<Product> list = dao.getProductByCategory(category_id);
         List<Category> listCategory = dao.getAllCategory();
         List<Brand> listBrand = dao.getAllBrand();
         List<Product> top3_new = dao.getTop3NewArrival();
         
-        // set data to jsp
-        request.setAttribute("listCategory", listCategory);
-        request.setAttribute("listBrand", listBrand);
-        request.setAttribute("top3_new", top3_new);
-        request.setAttribute("listProduct", list);
-        request.setAttribute("category_clicked", category_id);
-        request.getRequestDispatcher("Store.jsp").forward(request, response);
+        
+        if(brand_id != null && category_id != null){
+            List<Product> list = dao.getProductByFilter(category_id, brand_id, sort);
+            request.setAttribute("listCategory", listCategory);
+            request.setAttribute("listBrand", listBrand);
+            request.setAttribute("top3_new", top3_new);
+            request.setAttribute("listProduct", list);
+            request.setAttribute("category_clicked", category_id);
+            request.setAttribute("brand_clicked", brand_id);
+            request.getRequestDispatcher("Store.jsp").forward(request, response);
+        }else if(brand_id == null || category_id == null)
+        {
+            if(brand_id == null){
+            List<Product> list = dao.getProductByCategory(category_id, sort);
+            request.setAttribute("listProduct", list);
+            }else{
+            List<Product> list = dao.getProductByBrand(brand_id, sort);
+            request.setAttribute("listProduct", list);
+            }
+            request.setAttribute("listCategory", listCategory);
+            request.setAttribute("listBrand", listBrand);
+            request.setAttribute("top3_new", top3_new);
+            
+            request.setAttribute("category_clicked", category_id);
+            request.getRequestDispatcher("Store.jsp").forward(request, response);
+        }
+        
         
     } 
 

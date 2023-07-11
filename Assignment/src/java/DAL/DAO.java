@@ -53,28 +53,83 @@ public class DAO {
     }
     
     // Get Product from DB with paging
-    public List<Product> getAllProduct(int page){
+    public List<Product> getAllProduct(int page, int condition){
         List<Product> list = new ArrayList<>();
-        String query = "select * from Product\n" +
-                        "ORDER BY product_id\n" +
-                        "OFFSET ? ROWS FETCH NEXT 15 ROWS ONLY";
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, (page - 1) * 15); //page 1 start 0
-            rs = ps.executeQuery();
-            while(rs.next()){
-                list.add(new Product(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getDouble(5),
-                        rs.getString(7),
-                        rs.getFloat(6),
-                        rs.getDate(8)));
-            }
-        } catch (Exception e) {
-            
+        switch (condition) {
+            case 0:
+                {
+                    String query = "select * from Product\n" +
+                            "ORDER BY product_id\n" +
+                            "OFFSET ? ROWS FETCH NEXT 15 ROWS ONLY";
+                    try {
+                        conn = new DBContext().getConnection();
+                        ps = conn.prepareStatement(query);
+                        ps.setInt(1, (page - 1) * 15); //page 1 start 0
+                        rs = ps.executeQuery();
+                        while(rs.next()){
+                            list.add(new Product(
+                                    rs.getInt(1),
+                                    rs.getString(2),
+                                    rs.getDouble(5),
+                                    rs.getString(7),
+                                    rs.getFloat(6),
+                                    rs.getDate(8)));
+                        }
+                    } catch (Exception e) {
+                        
+                    }       break;
+                }
+            case 1:
+                {
+                    String query = "select * from Product\n" +
+                            "ORDER BY price\n" +
+                            "OFFSET ? ROWS FETCH NEXT 15 ROWS ONLY";
+                    try {
+                        conn = new DBContext().getConnection();
+                        ps = conn.prepareStatement(query);
+                        ps.setInt(1, (page - 1) * 15); //page 1 start 0
+                        rs = ps.executeQuery();
+                        while(rs.next()){
+                            list.add(new Product(
+                                    rs.getInt(1),
+                                    rs.getString(2),
+                                    rs.getDouble(5),
+                                    rs.getString(7),
+                                    rs.getFloat(6),
+                                    rs.getDate(8)));
+                        }
+                    } catch (Exception e) {
+                        
+                    }       break;
+                }
+            case 2:
+                {
+                    String query = "select * from Product\n" +
+                            "ORDER BY price DESC\n" +
+                            "OFFSET ? ROWS FETCH NEXT 15 ROWS ONLY";
+                    try {
+                        conn = new DBContext().getConnection();
+                        ps = conn.prepareStatement(query);
+                        ps.setInt(1, (page - 1) * 15); //page 1 start 0
+                        rs = ps.executeQuery();
+                        while(rs.next()){
+                            list.add(new Product(
+                                    rs.getInt(1),
+                                    rs.getString(2),
+                                    rs.getDouble(5),
+                                    rs.getString(7), 
+                                    rs.getFloat(6),
+                                    rs.getDate(8)));
+                        }
+                    } catch (Exception e) {
+                        
+                    }       break;
+                }
+            default:
+                break;
         }
+        
+        
         return list;
     }
     
@@ -116,27 +171,214 @@ public class DAO {
     }
     
     // Get product by category ID
-    public List<Product> getProductByCategory(String category_id){
+    public List<Product> getProductByCategory(String category_id, int condition){
         List<Product> list = new ArrayList<>();
-        String query = "select * from Product where category_id = ?";
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            //replace ? by category_id
-            ps.setString(1, category_id);
-            rs = ps.executeQuery();
-            while(rs.next()){
-                list.add(new Product(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getDouble(5),
-                        rs.getString(7),
-                        rs.getFloat(6),
-                        rs.getDate(8)));
+        if(condition == 0){
+            String query = "select * from Product where category_id = ?";
+            try {
+                conn = new DBContext().getConnection();
+                ps = conn.prepareStatement(query);
+                //replace ? by category_id
+                ps.setString(1, category_id);
+                rs = ps.executeQuery();
+                while(rs.next()){
+                    list.add(new Product(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getDouble(5),
+                            rs.getString(7),
+                            rs.getFloat(6),
+                            rs.getDate(8)));
+                }
+            } catch (Exception e) {
+
             }
-        } catch (Exception e) {
-            
         }
+        if(condition == 1){
+            String query = "select * from Product where category_id = ? order by price";
+            try {
+                conn = new DBContext().getConnection();
+                ps = conn.prepareStatement(query);
+                //replace ? by category_id
+                ps.setString(1, category_id);
+                rs = ps.executeQuery();
+                while(rs.next()){
+                    list.add(new Product(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getDouble(5),
+                            rs.getString(7),
+                            rs.getFloat(6),
+                            rs.getDate(8)));
+                }
+            } catch (Exception e) {
+
+            }
+        }
+        if(condition == 2){
+            String query = "select * from Product where category_id = ? order by price desc";
+            try {
+                conn = new DBContext().getConnection();
+                ps = conn.prepareStatement(query);
+                //replace ? by category_id
+                ps.setString(1, category_id);
+                rs = ps.executeQuery();
+                while(rs.next()){
+                    list.add(new Product(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getDouble(5),
+                            rs.getString(7),
+                            rs.getFloat(6),
+                            rs.getDate(8)));
+                }
+            } catch (Exception e) {
+
+            }
+        }
+        
+        return list;
+    }
+    // Get product by brand ID
+    public List<Product> getProductByBrand(String brand_id , int condition){
+        List<Product> list = new ArrayList<>(); 
+        if(condition == 0){
+            String query = "select * from Product where brand_id = ?";
+            try {
+                conn = new DBContext().getConnection();
+                ps = conn.prepareStatement(query);
+                //replace ? by category_id
+                ps.setString(1, brand_id);
+                rs = ps.executeQuery();
+                while(rs.next()){
+                    list.add(new Product(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getDouble(5),
+                            rs.getString(7),
+                            rs.getFloat(6),
+                            rs.getDate(8)));
+                }
+            } catch (Exception e) {
+
+            }
+        }
+        if(condition == 1){
+            String query = "select * from Product where brand_id = ? order by price";
+            try {
+                conn = new DBContext().getConnection();
+                ps = conn.prepareStatement(query);
+                //replace ? by category_id
+                ps.setString(1, brand_id);
+                rs = ps.executeQuery();
+                while(rs.next()){
+                    list.add(new Product(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getDouble(5),
+                            rs.getString(7),
+                            rs.getFloat(6),
+                            rs.getDate(8)));
+                }
+            } catch (Exception e) {
+
+            }
+        }
+        if(condition == 2){
+            String query = "select * from Product where brand_id = ? order by price desc";
+            try {
+                conn = new DBContext().getConnection();
+                ps = conn.prepareStatement(query);
+                //replace ? by category_id
+                ps.setString(1, brand_id);
+                rs = ps.executeQuery();
+                while(rs.next()){
+                    list.add(new Product(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getDouble(5),
+                            rs.getString(7),
+                            rs.getFloat(6),
+                            rs.getDate(8)));
+                }
+            } catch (Exception e) {
+
+            }
+        }
+        
+        return list;
+    }
+    
+    // Get product by category ID and brand ID
+    public List<Product> getProductByFilter(String category_id, String brand_id, int condition){
+        List<Product> list = new ArrayList<>();
+        if(condition == 1){
+            String query = "select * from Product where category_id = ? and brand_id = ? order by price";
+            try {
+                conn = new DBContext().getConnection();
+                ps = conn.prepareStatement(query);
+                //replace ? by category_id
+                ps.setString(1, category_id);
+                ps.setString(2, brand_id);
+                rs = ps.executeQuery();
+                while(rs.next()){
+                    list.add(new Product(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getDouble(5),
+                            rs.getString(7),
+                            rs.getFloat(6),
+                            rs.getDate(8)));
+                }
+            } catch (Exception e) {
+
+            }
+        }
+        if(condition == 2){
+            String query = "select * from Product where category_id = ? and brand_id = ? order by price desc";
+            try {
+                conn = new DBContext().getConnection();
+                ps = conn.prepareStatement(query);
+                //replace ? by category_id
+                ps.setString(1, category_id);
+                ps.setString(2, brand_id);
+                rs = ps.executeQuery();
+                while(rs.next()){
+                    list.add(new Product(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getDouble(5),
+                            rs.getString(7),
+                            rs.getFloat(6),
+                            rs.getDate(8)));
+                }
+            } catch (Exception e) {
+
+            }
+        }
+        if(condition == 0){
+            String query = "select * from Product where category_id = ? and brand_id = ?";
+            try {
+                conn = new DBContext().getConnection();
+                ps = conn.prepareStatement(query);
+                //replace ? by category_id
+                ps.setString(1, category_id);
+                ps.setString(2, brand_id);
+                rs = ps.executeQuery();
+                while(rs.next()){
+                    list.add(new Product(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getDouble(5),
+                            rs.getString(7),
+                            rs.getFloat(6),
+                            rs.getDate(8)));
+                }
+            } catch (Exception e) {
+
+            }
+        }
+        
         return list;
     }
     
@@ -261,6 +503,9 @@ public class DAO {
         }
         return list;
     }
+    
+    // get Feedback by product_id
+    //public List
     
     
     
@@ -624,7 +869,6 @@ public class DAO {
             
             ps.setDate(4, sqlDate);
             ps.setDate(5, sqlDate);
-            ps.executeUpdate();
             ps.executeUpdate(); // no result ==> no nead result set
         } catch (Exception e) {
         }
@@ -641,12 +885,12 @@ public class DAO {
             List<Product> listNew = dao.getTop3NewArrival();
             
             System.out.println(dao.getOrderByID(1));
-            
-//            System.out.println(dao.getProductByID("15"));
+            //dao.addFeedback(4, 6, "abcdef");
+//            System.out.println(dao.getProductByBrand("5 order by price"));
 //System.out.println(dao.login("adminHung", "adminHung"));
-            for (OrderDetail o : list ){
-                System.out.println(o);
-            }
+//            for (OrderDetail o : list ){
+//                System.out.println(o);
+//            }
         } catch (Exception e) {
         }
     }

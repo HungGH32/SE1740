@@ -53,7 +53,7 @@ public class ManageProductServlet extends HttpServlet {
         int page = Integer.parseInt(index);
         
         
-        List<Product> listProduct = dao.getAllProduct(page);
+        List<Product> listProduct = dao.getAllProduct(page,0);
         List<Category> listCategory = dao.getAllCategory();
         List<Brand> listBrand = dao.getAllBrand();
         

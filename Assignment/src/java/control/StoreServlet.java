@@ -38,7 +38,6 @@ public class StoreServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         // get data from dao 
         DAO dao = new DAO();
-        
         int numOfProduct = dao.getNumOfProduct();
         int lastPage = numOfProduct/15;
         if(numOfProduct %15 != 0){
@@ -53,8 +52,13 @@ public class StoreServlet extends HttpServlet {
         //Cookie trial
             List<Product> allProduct = dao.getProduct();
         //Cookie trial
-        
-        List<Product> listProduct = dao.getAllProduct(page);
+
+        String s = request.getParameter("sort");
+        int sort = 0;
+        if(s!= null){
+            sort = Integer.parseInt(s);
+        }     
+        List<Product> listProduct = dao.getAllProduct(page ,sort);
         List<Category> listCategory = dao.getAllCategory();
         List<Brand> listBrand = dao.getAllBrand();
         List<Product> top3_new = dao.getTop3NewArrival();

@@ -58,15 +58,16 @@
 						<!-- aside Widget -->
 						<div class="aside">
                                                     <div>
-                                                        <a href="store"><h3 class="aside-title" style="color: #D10024">All Categories</h3></a>
+                                                        <a href="store"><h3 class="aside-title" style="color: #D10024">All Product</h3></a>
                                                     </div>
+                                                    <h3 class="aside-title">Category</h3>
 							<div class="checkbox-filter">
                                                             <c:choose>
                                                                 <c:when test="${not empty category_clicked}">
                                                                     <c:forEach items="${listCategory}" var="o">
                                                                         <c:if test="${o.category_id == category_clicked}">
                                                                             <div class="input-checkbox">
-                                                                                <a href="category?cid=${o.category_id}">${o.category_name}</a>
+                                                                                <a class="filter-link" data-param="cid" data-value="${o.category_id}" onclick="handleLinkClick(event, this)">${o.category_name}</a>
                                                                             </div>
                                                                         </c:if>
                                                                     </c:forEach>
@@ -74,7 +75,7 @@
                                                                 <c:otherwise>
                                                                     <c:forEach items="${listCategory}" var="o">
                                                                         <div class="input-checkbox">
-                                                                            <a href="category?cid=${o.category_id}">${o.category_name}</a>
+                                                                            <a class="filter-link" data-param="cid" data-value="${o.category_id}" onclick="handleLinkClick(event, this)">${o.category_name}</a>
                                                                         </div>
                                                                     </c:forEach>
                                                                 </c:otherwise>
@@ -83,11 +84,11 @@
 						</div>
 						<!-- /aside Widget -->
 
-						<!-- aside Widget -->
+<!--						 aside Widget 
 						<div class="aside">
 							<h3 class="aside-title">Price</h3>
 							<div class="price-filter">
-								<div id="price-slider"></div>
+								<div id="price-slider" ></div>
 								<div class="input-number price-min">
 									<input id="price-min" type="number">
 									<span class="qty-up">+</span>
@@ -95,26 +96,36 @@
 								</div>
 								<span>-</span>
 								<div class="input-number price-max">
-									<input id="price-max" type="number">
+									<input id="price-max" type="number" vl>
 									<span class="qty-up">+</span>
 									<span class="qty-down">-</span>
 								</div>
 							</div>
 						</div>
-						<!-- /aside Widget -->
+						 /aside Widget -->
 
 						<!-- aside Widget -->
 						<div class="aside">
 							<h3 class="aside-title">Brand</h3>
 							<div class="checkbox-filter">
-                                                            <c:forEach items="${listBrand}" var="o">
-                                                                <div class="input-checkbox">
-									<label for="brand-${o.brand_id}">
-										<span></span>
-										${o.brand_name}
-									</label>
-								</div>
-                                                            </c:forEach>
+                                                            <c:choose>
+                                                                <c:when test="${not empty brand_clicked}">
+                                                                    <c:forEach items="${listBrand}" var="o">
+                                                                        <c:if test="${o.brand_id == brand_clicked}">
+                                                                            <div class="input-checkbox">
+                                                                                <a class="filter-link" data-param="br" data-value="${o.brand_id}" onclick="handleLinkClick(event, this)">${o.brand_name}</a>
+                                                                            </div>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <c:forEach items="${listBrand}" var="o">
+                                                                        <div class="input-checkbox">
+                                                                            <a class="filter-link" data-param="br" data-value="${o.brand_id}" onclick="handleLinkClick(event, this)">${o.brand_name}</a>
+                                                                        </div>
+                                                                    </c:forEach>
+                                                                </c:otherwise>
+                                                            </c:choose>
 							</div>
 						</div>
 						<!-- /aside Widget -->
@@ -157,12 +168,14 @@
 						<div class="store-filter clearfix ">
 							<div class="store-sort">
 								<label>
-                                                                    <form action="sortby" method="post">
+                                                                    <form id="myForm" onsubmit="return false;">
                                                                         Sort By:
-                                                                        <select class="input-select" name="sort">
-										<option value="0">PRICE - LOW TO HIGH</option>
-										<option value="1">PRICE - HIGH TO LOW</option>
+                                                                        <select class="input-select" id="sort">
+                                                                            <option value="0">NONE</option>
+                                                                            <option value="1" <% if (request.getParameter("sort") != null && request.getParameter("sort").equals("1")) out.print("selected"); %>>PRICE - LOW TO HIGH</option>
+                                                                            <option value="2" <% if (request.getParameter("sort") != null && request.getParameter("sort").equals("2")) out.print("selected"); %>>PRICE - HIGH TO LOW</option>
 									</select>
+                                                                        <button  onclick="updateUrl()" class="btn btn-danger btn-sm" style="background-color: #D10024;width: 100px;height: 40px;color: white"><strong>SORT</strong></button>
                                                                     </form>
 								</label>
 							</div>
@@ -245,6 +258,50 @@
 		<!-- /SECTION -->
 
 		<jsp:include page="Footer.jsp"></jsp:include>
+                
+<script>
+  function handleLinkClick(event, link) {
+    event.preventDefault();
+    
+    let currentURL = window.location.href;
+    let param = link.getAttribute('data-param');
+    let value = link.getAttribute('data-value');
+    let newHref;
+    if (currentURL.indexOf('category') !== -1) {
+        newHref = currentURL + '&' + param + '=' + value;
+    }else{
+        newHref = '/Assignment/category?' + param + '=' + value;  
+    }
+    window.location.href = newHref;
+  }
+</script>
+<script>
+function updateUrl() {
+  var value = document.getElementById("sort").value;
+  
+  var url = window.location.href;
+  var index = url.indexOf("&sort=");
+   var indexA = url.indexOf("?sort=");
+  
+  
+    if (url.indexOf('category') !== -1) {
+        if (index !== -1) {
+            url = url.substring(0, index) + "&sort=" + value;
+         } else {
+           url += "&sort=" + value;
+         }
+    }else{
+        if (indexA !== -1) {
+            url = url.substring(0, indexA) + "?sort=" + value;
+         } else {
+           url += "?sort=" + value;
+         }  
+    }
+  window.location.href = url;
+  
+}
+</script>
+
 
 		<!-- jQuery Plugins -->
 		<script src="front-end/js/jquery.min.js"></script>

@@ -51,8 +51,7 @@
 			<div id="top-header">
 				<div class="container">
 					<ul class="header-links pull-left">
-						<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i> hungtdhe171201@fpt.edu.vn</a></li>
 						<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 					</ul>
 					<ul class="header-links pull-right">
@@ -107,7 +106,7 @@
 						<!-- ACCOUNT -->
 						<div class="col-md-3 clearfix">
 							<div class="header-ctn">
-								<!-- Wishlist -->
+<!--								 Wishlist 
 								<div>
 									<a href="#">
 										<i class="fa fa-heart-o"></i>
@@ -115,7 +114,7 @@
 										<div class="qty">2</div>
 									</a>
 								</div>
-								<!-- /Wishlist -->
+								 /Wishlist -->
 
 								<!-- Cart -->
 								<div class="dropdown">
@@ -175,13 +174,13 @@
 		</header>
 		<!-- /HEADER -->
 
-		<!-- NAVIGATION -->
+<!--		 NAVIGATION 
 		<nav id="navigation">
-			<!-- container -->
+			 container 
 			<div class="container">
-				<!-- responsive-nav -->
+				 responsive-nav 
 				<div id="responsive-nav">
-					<!-- NAV -->
+					 NAV 
 					<ul class="main-nav nav navbar-nav">
 						<li><a href="#">Home</a></li>
                                                 <li><a href="#">Our Store</a></li>
@@ -190,13 +189,13 @@
 						<li><a href="#">About Us</a></li>
                                                 <li><a href="#">Contact & Support</a></li>
 					</ul>
-					<!-- /NAV -->
+					 /NAV 
 				</div>
-				<!-- /responsive-nav -->
+				 /responsive-nav 
 			</div>
-			<!-- /container -->
+			 /container 
 		</nav>
-		<!-- /NAVIGATION -->
+		 /NAVIGATION -->
 
 		<!-- jQuery Plugins -->
 		<script src="front-end/js/jquery.min.js"></script>

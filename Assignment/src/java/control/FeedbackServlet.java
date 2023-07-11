@@ -31,15 +31,7 @@ public class FeedbackServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DAO dao = new DAO();
-        String uid = request.getParameter("user_id");
-        int user_id = Integer.parseInt(uid);
-        String pid = request.getParameter("product_id");
-        int product_id = Integer.parseInt(pid);
-        String feedback = request.getParameter("feedback");
         
-        dao.addFeedback(user_id, product_id, feedback);
-        response.sendRedirect("detail?pid=" + pid);
         
     } 
 
@@ -67,7 +59,16 @@ public class FeedbackServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        DAO dao = new DAO();
+        String uid = request.getParameter("user_id");
+        int user_id = Integer.parseInt(uid);
+        String pid = request.getParameter("product_id");
+        int product_id = Integer.parseInt(pid);
+        String feedback = request.getParameter("feedback");
+        
+        dao.addFeedback(user_id, product_id, feedback);
+        
+        response.sendRedirect("detail?pid=" + pid);
     }
 
     /** 
