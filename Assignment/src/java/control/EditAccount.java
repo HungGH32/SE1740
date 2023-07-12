@@ -10,24 +10,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Account;
-import model.Cart;
-import model.Info;
-import model.Item;
-import model.Product;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="DetailServlet", urlPatterns={"/detail"})
-public class DetailServlet extends HttpServlet {
+@WebServlet(name="EditAccount", urlPatterns={"/editaccount"})
+public class EditAccount extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,59 +33,11 @@ public class DetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("acc");
-        String account_id = "";
-        if(a != null){
-            account_id = Integer.toString(a.getAccount_id());
-        }
-       
-        String id = request.getParameter("pid");
+        String account_id = request.getParameter("account_id");
         DAO dao = new DAO();
-        
-        List<Product> allProduct = dao.getProduct();
-        
-        Product product = dao.getProductByID(id);
-        
-        int info_id = Integer.parseInt(id);
-        Info info = dao.getInfoByID(info_id);
-        
-        String description = dao.getInfoByID(info_id).getDescription();
-        String[] descriptionLines = description.split(", ");
-        
-        Cookie[] array = request.getCookies();
-        // cookie(txt)
-        // seperate by " ," each item |id: quantity|,|id: quantity|, ...
-        String text = "";
-        if (array != null){
-            for(Cookie cookie: array){
-                
-                if(cookie.getName().equals("cart" + account_id)){
-                    text += cookie.getValue();
-                }
-            }
-        }
-        Cart cart = new Cart(text, allProduct); // get Cart
-        List<Item> listItem = cart.getItems();  
-        
-        int listItemSize;
-        if(listItem != null){
-            listItemSize = listItem.size();
-        }else{
-            listItemSize = 0;
-        }
-        
-        
-     // Set up cookie
-     
-     // attribute
-        request.setAttribute("account", a);
-        request.setAttribute("listItemSize", listItemSize);
-        request.setAttribute("descriptionLines", descriptionLines);
-        request.setAttribute("info", info);
-        request.setAttribute("detail", product);
-        request.getRequestDispatcher("Detail.jsp").forward(request, response);
-        
+        Account account_a= dao.getAccountByID(account_id);
+        request.setAttribute("account_a", account_a);
+        request.getRequestDispatcher("EditAccount.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -118,7 +64,16 @@ public class DetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        String role = request.getParameter("role");
+        String account_id = request.getParameter("account_id");
+        DAO dao = new DAO();
+        
+        dao.editAccount(username, password, email, role, account_id);
+        response.sendRedirect("manageuser");
     }
 
     /** 

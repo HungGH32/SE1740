@@ -19,11 +19,12 @@ public class Product {
     private Date createTime;
     private int category_id;
     private int brand_id;
+    private int status;
 
     public Product() {
     }
 
-    public Product(int product_id, String name, double price, String imageURL, float discount, Date createTime, int category_id, int brand_id) {
+    public Product(int product_id, String name, double price, String imageURL, float discount, Date createTime, int category_id, int brand_id, int status) {
         this.product_id = product_id;
         this.name = name;
         this.price = price;
@@ -32,6 +33,7 @@ public class Product {
         this.createTime = createTime;
         this.category_id = category_id;
         this.brand_id = brand_id;
+        this.status = status;
     }
 
     public int getProduct_id() {
@@ -98,12 +100,20 @@ public class Product {
         this.brand_id = brand_id;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Product{" + "product_id=" + product_id + ", name=" + name + ", price=" + price + ", imageURL=" + imageURL + ", discount=" + discount + ", createTime=" + createTime + ", category_id=" + category_id + ", brand_id=" + brand_id + '}';
+        return "Product{" + "product_id=" + product_id + ", name=" + name + ", price=" + price + ", imageURL=" + imageURL + ", discount=" + discount + ", createTime=" + createTime + ", category_id=" + category_id + ", brand_id=" + brand_id + ", status=" + status + '}';
     }
-    
 
+   
     
     
 }

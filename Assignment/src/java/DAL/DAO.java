@@ -18,6 +18,7 @@ import model.Info;
 import model.Order;
 import model.OrderDetail;
 import model.Product;
+import model.User;
 
 /**
  *
@@ -46,7 +47,8 @@ public class DAO {
                         rs.getFloat(6),
                         rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)
+                        rs.getInt(4),
+                        rs.getInt(9)
                 ));
             }
         } catch (Exception e) {
@@ -78,7 +80,8 @@ public class DAO {
                                     rs.getFloat(6),
                                     rs.getDate(8),
                                     rs.getInt(3),
-                                    rs.getInt(4)
+                                    rs.getInt(4),
+                                    rs.getInt(9)
                             ));
                         }
                     } catch (Exception e) {
@@ -104,7 +107,8 @@ public class DAO {
                                     rs.getFloat(6),
                                     rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
                         }
                     } catch (Exception e) {
                         
@@ -129,7 +133,8 @@ public class DAO {
                                     rs.getFloat(6),
                                     rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
                         }
                     } catch (Exception e) {
                         
@@ -142,7 +147,78 @@ public class DAO {
         
         return list;
     }
-    
+    // Get All Account
+    public List<Account> getAllAccount(){
+        List<Account> list = new ArrayList<>();
+        String query = "select * from Account";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                list.add(new Account(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5)
+                
+                ));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    // Get  Account by ID
+    public Account getAccountByID(String Account_ID){
+        String query = "select * from Account where account_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, Account_ID);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                return new Account(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5)
+                
+                );
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+     
+   
+    // Get User by UD //String account_ID //where user_id = ?
+    public List<User> getUserByID(){
+        List<User> list = new ArrayList<>();
+        String query = "select * from [User] ";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+//            ps.setString(1, account_ID);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                list.add(new User(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getDate(5),
+                        rs.getInt(6)
+                
+                ));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
     // Get Category from DB
     public List<Category> getAllCategory(){
         List<Category> list = new ArrayList<>();
@@ -200,7 +276,8 @@ public class DAO {
                             rs.getFloat(6),
                             rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
                 }
             } catch (Exception e) {
 
@@ -223,7 +300,8 @@ public class DAO {
                             rs.getFloat(6),
                             rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
                 }
             } catch (Exception e) {
 
@@ -246,7 +324,8 @@ public class DAO {
                             rs.getFloat(6),
                             rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
                 }
             } catch (Exception e) {
 
@@ -275,7 +354,8 @@ public class DAO {
                             rs.getFloat(6),
                             rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
                 }
             } catch (Exception e) {
 
@@ -298,7 +378,8 @@ public class DAO {
                             rs.getFloat(6),
                             rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
                 }
             } catch (Exception e) {
 
@@ -321,7 +402,8 @@ public class DAO {
                             rs.getFloat(6),
                             rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
                 }
             } catch (Exception e) {
 
@@ -352,7 +434,8 @@ public class DAO {
                             rs.getFloat(6),
                             rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
                 }
             } catch (Exception e) {
 
@@ -376,7 +459,8 @@ public class DAO {
                             rs.getFloat(6),
                             rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
                 }
             } catch (Exception e) {
 
@@ -400,7 +484,8 @@ public class DAO {
                             rs.getFloat(6),
                             rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
                 }
             } catch (Exception e) {
 
@@ -428,7 +513,8 @@ public class DAO {
                         rs.getFloat(6),
                         rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4));
+                        rs.getInt(4),
+                        rs.getInt(9));
             }
         } catch (Exception e) {
             
@@ -456,7 +542,8 @@ public class DAO {
                         rs.getFloat(6),
                         rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
             }
         } catch (Exception e) {
             
@@ -481,7 +568,8 @@ public class DAO {
                         rs.getFloat(6),
                         rs.getDate(8),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(9)));
             }
         } catch (Exception e) {
         }
@@ -702,6 +790,29 @@ public class DAO {
         
     }
     
+    // Delete product
+    public void deleteAccount(String account_id){
+        String query ="delete from [OrderDetail]\n" +
+                        "where order_id in (select Order_id from [Order] where [user_id] = ?)\n" +
+                        "delete from [Order]\n" +
+                        "where [user_id] = ?\n" +
+                        "delete from [User]\n" +
+                        "where [user_id] = ?\n" +
+                        "delete from Account\n" +
+                        "where account_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1,account_id);
+            ps.setString(2,account_id);
+            ps.setString(3,account_id);
+            ps.setString(4,account_id);
+            ps.executeUpdate(); 
+        } catch (Exception e) {
+        }
+        
+    }
+    
     // Delete Order
     public void deleteOrder(int order_dl){
         String query ="delete from [Order] \n" +
@@ -729,7 +840,27 @@ public class DAO {
         }
         
     }
-    
+    // Edit Account
+     public void editAccount(String username, String password,  String email, String role,String account_id){
+        String query ="UPDATE [Account]\n" +
+                    "SET [username] = ?,\n" +
+                    "	[password] = ?,\n" +
+                    "	[email] = ?,\n" +
+                    "	[role] = ?\n" +
+                    "	Where account_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setString(3, email);
+            ps.setString(4, role);
+            ps.setString(5, account_id);
+            ps.executeUpdate(); 
+        } catch (Exception e) {
+        }
+        
+        }
     // Edit product
     public void editProduct(String name, int category_id, int brand_id, double price, float discount, String imageUrl, int product_id){
         String query ="UPDATE [Product]\n" +

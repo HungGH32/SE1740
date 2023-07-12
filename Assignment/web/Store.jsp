@@ -47,6 +47,10 @@
     </head>
 	<body>
             <jsp:include page="Header.jsp"></jsp:include>
+                <div id="hot-deal" >
+                    <img src="https://www.hanoicomputer.vn/media/lib/gaming-gear-header-banner-27-05-20.png" alt="alt" width="100%" height="100%"/>
+		</div>
+		<!-- /HOT DEAL SECTION -->
                 <!-- SECTION -->
 		<div class="section">
 			<!-- container -->

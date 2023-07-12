@@ -58,6 +58,7 @@
                                                 <c:if test="${sessionScope.acc.role == 1}">
                                                     <li><a href="manageproduct"><i class="fa fa-gear"></i> Manage Product</a></li>
                                                     <li><a href="manageorder"><i class="fa fa-gear"></i> Manage Order</a></li>
+                                                    <li><a href="manageuser"><i class="fa fa-gear"></i> Manage Account</a></li>
                                                 </c:if>
                                                 <c:if test="${sessionScope.acc.role == 0}">
                                                     <li><a href="AccountManage.jsp"><i class="fa fa-gear"></i> Manage Account</a></li>
@@ -146,7 +147,7 @@
                                                                                 </c:forEach>
                                                                                 <!--ITEM-->
 										<div class="cart-summary">
-											<h5>SUBTOTAL: <fmt:formatNumber pattern="##.#" value="${totalMoney}"/></h5>
+											<h5>    TOTAL: <fmt:formatNumber pattern="##.#" value="${totalMoney}"/></h5>
 										</div>
 										<div class="cart-btns">
 											<a href="showcart">Manage Cart</a>

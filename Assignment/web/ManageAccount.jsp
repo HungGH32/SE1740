@@ -261,35 +261,30 @@ body {
     </div>
     <table class="table table-striped table-hover">
       <thead>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Image</th>
-          <th>Discount</th>
-          <th>Price</th>
-          <th>Create time</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <th>Account ID</th>
+          <th>Username</th>
+          <th>Password</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Action</th>
         </tr>
       </thead>
       
 <!--CONTENT-->
       <tbody>
          <!--ROW--> 
-         <c:forEach items = "${listProduct}" var="o" varStatus="status">   
+         <c:forEach items = "${listAccount}" var="o" varStatus="status">   
             <tr>
                   <!--DATA-->
-                  <td>${o.product_id}</td>
-                  <td>${o.name}</td>
-                  <td><img src="${o.imageURL}" width="70px" height="70px" alt="alt"/></td>
-                  <td>${o.discount}</td>
-                  <td>${o.price}</td>
-                  <td>${o.createTime}</td>
-                  
-                  <td>${o.status}</td> 
+                  <td>${o.account_id}</td>
+                  <td>${o.username}</td>
+                  <td>${o.password}</td>
+                  <td>${o.email}</td>
+                  <td>${o.role}</td>
                   <!--DATA-->
                   <td>
-                    <a href="loadeditproduct?pid=${o.product_id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                    <a id="deleteQ" href="#" onclick="confirmDelete(${o.product_id})" ><i class="material-icons" title="Delete">&#xE872;</i></a>
+                    <a href="editaccount?account_id=${o.account_id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                    <a href="#" onclick="confirmDelete(${o.account_id})" ><i class="material-icons" title="Delete">&#xE872;</i></a>
                   </td>
             </tr>
         </c:forEach>
@@ -405,27 +400,7 @@ body {
     </div>
   </div>
 </div>
-<!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Delete Employee</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete these Records?</p>
-          <p class="text-warning"><small>This action cannot be undone.</small></p>
-        </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-danger" value="Delete">
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
 
   <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
@@ -459,9 +434,9 @@ $(document).ready(function () {
     
     <script type="text/javascript">
             function confirmDelete(id) {
-                if (confirm("Xóa sản phẩm id=" + id + "?")) {
+                if (confirm("Xóa account id=" + id + "?")) {
                     
-                  window.location= "delete?pid=" + id;
+                  window.location= "deleteaccount?account_id=" + id;
                         
                 }
             }
