@@ -41,11 +41,7 @@ public class DetailServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("acc");
-        String account_id = "";
-        if(a != null){
-            account_id = Integer.toString(a.getAccount_id());
-        }
-       
+        String account_id = Integer.toString(a.getAccount_id());
         String id = request.getParameter("pid");
         DAO dao = new DAO();
         

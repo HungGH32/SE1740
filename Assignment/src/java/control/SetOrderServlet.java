@@ -52,14 +52,17 @@ public class SetOrderServlet extends HttpServlet {
             String phonenumber = request.getParameter("phonenumber");
             String note = request.getParameter("note");
             String stts = request.getParameter("status");
-            int status = Integer.parseInt(stts);
+            int status = 0;
+            if(stts != null){
+                status = Integer.parseInt(stts);
+            }
             String t = request.getParameter("total_money");
             Float total = Float.parseFloat(t);
 
             //int user_id, String fullname, String address, String email, String phonenumber, String note, int status,float total
             dao.addOrder(user_id, fullname, address, email, phonenumber, note, status, total);
-             List<Product> allProduct = dao.getProduct();
-             Cookie[] array = request.getCookies();
+            List<Product> allProduct = dao.getProduct();
+            Cookie[] array = request.getCookies();
             // cookie(txt)
             // seperate by " ," each item |id: quantity|,|id: quantity|, ...
             String text = "";
