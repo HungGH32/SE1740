@@ -31,7 +31,7 @@
             <div class="card-header">
               <div class="d-flex">
                 <div class="align-self-center flex-grow-1">Edit Account | #${account_a.account_id} </div>
-                <a href="manageorder" class="btn btn-danger">Back to Manage</a>
+                <a href="manageuser" class="btn btn-danger">Back to Manage</a>
               </div>
             </div>
 
