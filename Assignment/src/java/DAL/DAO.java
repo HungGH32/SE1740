@@ -194,29 +194,29 @@ public class DAO {
      
    
     // Get User by UD //String account_ID //where user_id = ?
-    public List<User> getUserByID(){
-        List<User> list = new ArrayList<>();
-        String query = "select * from [User] ";
+    public User getUserByID(String account_ID){
+        
+        String query = "select * from [User] where user_id = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
-//            ps.setString(1, account_ID);
+            ps.setString(1, account_ID);
             rs = ps.executeQuery();
             while(rs.next()){
-                list.add(new User(
+                return new User(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getDate(5),
-                        rs.getInt(6)
+                        rs.getDate(6),
+                        rs.getInt(7)
                 
-                ));
+                );
             }
         } catch (Exception e) {
         }
-        return list;
+        return null;
     }
 
     // Get Category from DB
@@ -861,6 +861,60 @@ public class DAO {
         }
         
         }
+     // set new password
+     public void newPassword(String password, String account_id){
+        String query ="UPDATE [Account]\n" +
+                    "SET [password] = ?\n" +
+                    "	Where account_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, password);
+            ps.setString(2, account_id);
+            ps.executeUpdate(); 
+        } catch (Exception e) {
+        }
+        
+        }
+     // Edit email
+     public void newEmail(String email, String account_id){
+        String query ="UPDATE [Account]\n" +
+                    "SET [email] = ?\n" +
+                    "	Where account_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, email);
+            ps.setString(2, account_id);
+            ps.executeUpdate(); 
+        } catch (Exception e) {
+        }
+        
+        }
+     // Edit profile
+    public void editProfile(String fullname, String address, String phonenumber, String country, String date, String user_id){
+        String query ="Update [User]\n" +
+                        "Set \n" +
+                        "	fullname = ?,\n" +
+                        "	address = ?,\n" +
+                        "	phonenumber = ?,\n" +
+                        "	country = ?,\n" +
+                        "	DOB = ?\n" +
+                        "where user_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1,fullname);
+            ps.setString(2,address);
+            ps.setString(3,phonenumber);
+            ps.setString(4,country);
+            ps.setString(5,date);
+            ps.setString(6,user_id);
+            ps.executeUpdate(); // no result ==> no nead result set
+        } catch (Exception e) {
+        }
+    }
+    
     // Edit product
     public void editProduct(String name, int category_id, int brand_id, double price, float discount, String imageUrl, int product_id){
         String query ="UPDATE [Product]\n" +
@@ -909,11 +963,12 @@ public class DAO {
     }
     
     //Edit Order
-    public void editOrder(String address, String note, int status, int Order_id){
+    public void editOrder(String address, String note, int status, String phonenumber, int Order_id){
         String query ="UPDATE [Order]\n" +
                         "SET [address] = ?,\n" +
                         "    [note] = ?,\n" +
-                        "    [status] = ?\n" +
+                        "    [status] = ?,\n" +
+                        "    [phonenumber] = ?\n" +
                         "WHERE [Order_id] = ?;";
         try {
             conn = new DBContext().getConnection();
@@ -921,7 +976,8 @@ public class DAO {
             ps.setString(1,address);
             ps.setString(2,note);
             ps.setInt(3,status);
-            ps.setInt(4,Order_id);
+            ps.setString(4,phonenumber);
+            ps.setInt(5,Order_id);
             ps.executeUpdate(); // no result ==> no nead result set
         } catch (Exception e) {
         }
@@ -1049,7 +1105,7 @@ public class DAO {
             List<Brand> listB = dao.getAllBrand();
             List<Product> listNew = dao.getTop3NewArrival();
             
-            System.out.println(dao.getOrderByID(1));
+//            dao.newEmail("hung@gmail.com", "2");
             //dao.addFeedback(4, 6, "abcdef");
 //            System.out.println(dao.getProductByBrand("5 order by price"));
 //System.out.println(dao.login("adminHung", "adminHung"));

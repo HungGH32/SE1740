@@ -39,14 +39,14 @@ where account_id = 4
 
 
 UPDATE [Account]
-SET [username] = 'adminH',
-	[password] = 'adminH',
+SET [username] = 'HungGH',
+	[password] = 'HungGH',
 	[email] = 'Hung@gmail.com',
-	[role] = 1
-	Where account_id = 1
+	[role] = 0
+	Where account_id = 2
 
 select * from Account
-where username = 'adminH'
+where username = 'HungGH'
 and [password] = 'admin'
 select * from Account where [role] = 1
 

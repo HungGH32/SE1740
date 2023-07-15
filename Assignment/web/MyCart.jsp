@@ -144,9 +144,9 @@
                 </div>
               </td>
               <td data-th="Quantity" class="col-md-2">
-                <button class="btn btn-sm btn-info"><a href="process?num=-1&id=${i.product.product_id}">-</a></button>
+                <a href="process?num=-1&id=${i.product.product_id}" class="btn btn-sm btn-info">-</a>
                 ${i.item_quantity}
-                <button class="btn btn-sm btn-info"><a href="process?num=1&id=${i.product.product_id}">+</a></button>
+                <a href="process?num=1&id=${i.product.product_id}" class="btn btn-sm btn-info">+</a>
               </td>
               <td data-th="Price" class="col-md-1">${i.product.price}</td>
               <td data-th="Price" class="col-md-1">${i.product.discount}</td>
@@ -154,9 +154,9 @@
                 <fmt:formatNumber pattern="##.#" value="${i.item_price * i.item_quantity} " />
               </td>
               <td class="col-md-1 actions">
-                <form action="process" method="POST">
+                  <form action="process" method="POST" id="myForm">
                     <input type="hidden" name="delete_id" class="btn btn-danger btn-sm" value="${i.product.product_id}"/>
-                    <input type="submit" class="btn btn-danger btn-sm" value="Return Item" />
+                    <input type="submit"  onclick="confirmDelete(${i.product.product_id})" class="btn btn-danger btn-sm" value="Return Item" />
                 </form>
               </td>
             </tr>
@@ -182,6 +182,17 @@
     </div>
     <br>
     <jsp:include page="Footer.jsp"></jsp:include> 
+    
+    <script type="text/javascript">
+            function confirmDelete(id) {
+                var a =document.getElementById("myForm").method = "POST";
+                if (confirm("Xóa order id=" + id + "?")) {
+                    
+                  document.getElementById("myForm").submit();
+                        
+                }
+            }
+    </script>
 </body>
 </html>
 

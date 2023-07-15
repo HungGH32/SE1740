@@ -61,7 +61,7 @@
                                                     <li><a href="manageuser"><i class="fa fa-gear"></i> Manage Account</a></li>
                                                 </c:if>
                                                 <c:if test="${sessionScope.acc.role == 0}">
-                                                    <li><a href="AccountManage.jsp"><i class="fa fa-gear"></i> Manage Account</a></li>
+                                                    <li><a href="manageprofile"><i class="fa fa-gear"></i> Manage Account</a></li>
                                                 </c:if>
                                                 <c:choose>
                                                     <c:when test="${sessionScope.acc != null}">
@@ -141,7 +141,6 @@
 													<h3 class="product-name"><a href="#">${i.product.name}</a></h3>
 													<h4 class="product-price"><span class="qty">${i.item_quantity}x</span> <fmt:formatNumber pattern="##.#" value="${i.item_price * i.item_quantity}"/>$</h4>
 												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
 											</div>
                                                                                     </div>
                                                                                 </c:forEach>

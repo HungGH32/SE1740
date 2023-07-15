@@ -67,7 +67,7 @@
                     <div class="form-group row">
                       <label for="manufacturer_id" class="col-sm-3 col-form-label">Phone Number</label>
                       <div class="col-sm-5">
-                          ${order.phonenumber} 
+                          <input type="text" class="form-control" name="phonenumber" value="${order.phonenumber}"> 
                       </div>
                     </div>
                     <div class="form-group row">

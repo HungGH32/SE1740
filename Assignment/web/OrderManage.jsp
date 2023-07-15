@@ -251,7 +251,7 @@ body {
     <div class="table-title">
       <div class="row">
         <div class="col-sm-6">
-          <h2>Manage <b>Product</b></h2>
+          <h2>Manage <b>Order</b></h2>
         </div>
         <div class="col-sm-6">
           <a href="store" class="btn btn-danger" ><i class="material-icons">&#xE15C;</i> <span>Back to Home</span></a>
@@ -274,7 +274,9 @@ body {
           <th>Status</th>
           <th>Total</th>
           <th>Info</th>
-          <th>Action</th>
+          <th>Edit</th>
+          <th>Delete</th>
+          
           
           
         </tr>
@@ -301,9 +303,8 @@ body {
                   <td><a href="updateorder?order_dt=${o.order_id}" class="detail" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Detail">&#xe88e;</i></a></td>
                   <td>
                     <a href="updateorder?order_ed=${o.order_id}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                    <a href="updateorder?order_dl=${o.order_id}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                   </td>
-                  
+                  <td><a href="#" onclick="confirmDelete(${o.order_id})"class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a></td>
             </tr>
         </c:forEach>
         <!--ROW--> 
@@ -346,7 +347,15 @@ $(document).ready(function () {
 //# sourceURL=pen.js
     </script>
     
-
+<script type="text/javascript">
+            function confirmDelete(id) {
+                if (confirm("Xóa order id=" + id + "?")) {
+                    
+                  window.location= "updateorder?order_dl=" + id;
+                        
+                }
+            }
+    </script>
   
 </body>
 

@@ -251,10 +251,9 @@ body {
     <div class="table-title">
       <div class="row">
         <div class="col-sm-6">
-          <h2>Manage <b>Product</b></h2>
+          <h2>Manage <b>Account</b></h2>
         </div>
         <div class="col-sm-6">
-          <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
           <a href="store" class="btn btn-danger" ><i class="material-icons">&#xE15C;</i> <span>Back to Home</span></a>
         </div>
       </div>

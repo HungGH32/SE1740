@@ -13,18 +13,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Order;
-import model.OrderDetail;
-import model.Product;
+import model.Account;
+import model.User;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name="UpdateOrderServlet", urlPatterns={"/updateorder"})
-public class UpdateOrderServlet extends HttpServlet {
+@WebServlet(name="ManageProfile", urlPatterns={"/manageprofile"})
+public class ManageProfile extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,49 +35,23 @@ public class UpdateOrderServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DAO dao = new DAO();
-        
-        // DELETE
-        String delete = request.getParameter("order_dl");
-        if(delete != null){
-            int order_dl = Integer.parseInt(delete);
-            dao.deleteOrderDetail(order_dl);
-            dao.deleteOrder(order_dl);
-            response.sendRedirect("manageorder");
+        HttpSession session = request.getSession();
+        Account a = (Account) session.getAttribute("acc");
+        String account_id = "";
+        if(a != null){
+            account_id = Integer.toString(a.getAccount_id());
+            DAO dao = new DAO();
+    //        List<User> listUser = dao.getUserByID();
+            User user = dao.getUserByID(account_id);
+            Account acc = dao.getAccountByID(account_id);
+            request.setAttribute("account", acc);
+            request.setAttribute("user", user);
+
+            request.getRequestDispatcher("ManageProfile.jsp").forward(request, response);
+        }else{
+            response.sendRedirect("Login.jsp");
         }
-        
-        //EDIT order_ed
-        String edit = request.getParameter("order_ed");
-        if(edit != null){
-            int order_ed = Integer.parseInt(edit);
-            Order order = dao.getOrderByID(order_ed);
-            List<OrderDetail> listOrderDetail = dao.getOrderDetailByOrderID(order_ed);
-            
-            request.setAttribute("order", order);
-            request.setAttribute("listOrderDetail", listOrderDetail);
-            request.setAttribute("order_ed", order_ed);
-            request.getRequestDispatcher("EditOrder.jsp").forward(request, response);
-        }
-        
-        // SHOW Detail
-        String detail = request.getParameter("order_dt");
-        if(detail != null){
-            int pid;
-            String product_id;
-            int order_dt = Integer.parseInt(detail);
-            List<Product> listProduct = new ArrayList<>();
-            List<OrderDetail> listOrderDetail = dao.getOrderDetailByOrderID(order_dt);
-            for (OrderDetail o : listOrderDetail)
-            {
-                pid = o.getProduct_id();
-                product_id = Integer.toString(pid);
-                listProduct.add(dao.getProductByID(product_id));
-            }
-            request.setAttribute("listProduct", listProduct);
-            request.setAttribute("listOrderDetail", listOrderDetail);
-            request.getRequestDispatcher("OrderDetail.jsp").forward(request, response);
-        }
-        
+                
         
     } 
 
@@ -106,17 +79,21 @@ public class UpdateOrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String id = request.getParameter("order_id");
-        int order_id = Integer.parseInt(id);
-        String address = request.getParameter("address");
-        String sta = request.getParameter("status");
-        String phonenumber = request.getParameter("phonenumber");
-        int status = Integer.parseInt(sta);
-        String note = request.getParameter("note");
-        DAO dao = new DAO();
         
-        dao.editOrder(address, note, status, phonenumber, order_id);
-        response.sendRedirect("manageorder");
+        String fullname = request.getParameter("fullname");
+        String phonenumber = request.getParameter("phonenumber");
+        String address = request.getParameter("address");
+        String date = request.getParameter("date");
+        String country = request.getParameter("country");
+        String email = request.getParameter("email");
+        String user_id = request.getParameter("user_id");
+        
+        DAO dao = new DAO();
+        dao.newEmail(email, user_id);
+        dao.editProfile(fullname, address, phonenumber, country, date, user_id);
+        
+        
+        response.sendRedirect("manageprofile");
     }
 
     /** 

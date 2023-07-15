@@ -40,6 +40,9 @@ public class ProcessServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         // get data from dao
                 //
+                
+            String num =request.getParameter("num");
+            String pid = request.getParameter("id");
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("acc");
         if (a != null){
@@ -66,8 +69,6 @@ public class ProcessServlet extends HttpServlet {
             // get txt and cr cart
             Cart cart = new Cart(text, allProduct);
 
-            String num =request.getParameter("num");
-            String pid = request.getParameter("id");
 
             int product_id, num_raw = 0;
             try {
